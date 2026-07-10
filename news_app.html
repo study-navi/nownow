@@ -245,7 +245,9 @@
   .action-rail{
     position:fixed;
     right:16px;
-    top:50%;
+    top:50%; /* fallback; JS overrides with an accurate pixel value below,
+                 since iOS Safari's address-bar show/hide makes plain
+                 top:50% unreliable for position:fixed elements */
     transform:translateY(-50%);
     z-index:40;
     display:flex;
@@ -728,7 +730,7 @@
 
 </div>
 
-<div class="action-rail hidden" id="fabRail">
+<div class="action-rail" id="fabRail">
   <div>
     <button class="like-btn" id="fabLike" title="Obsidian用メモを保存">♡</button>
     <div class="like-label" id="fabLikeLabel">保存</div>
@@ -799,6 +801,24 @@
     var idx = Math.round(reelsEl.scrollTop / slideH);
     idx = Math.max(0, Math.min(idx, visible.length - 1));
     updateFabForReel(visible[idx]);
+  }
+
+  // iOS Safari's address bar / bottom bar show and hide as you scroll,
+  // which makes plain CSS `top:50%` on a `position:fixed` element drift —
+  // it can end up positioned off the bottom of the visible screen. Using
+  // the visualViewport size (when available) and recalculating pixel
+  // position keeps the ♡ button correctly centered no matter what the
+  // browser chrome is doing.
+  function positionFab(){
+    var vh = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
+    fabRail.style.top = Math.round(vh / 2) + 'px';
+  }
+  positionFab();
+  window.addEventListener('resize', positionFab);
+  window.addEventListener('orientationchange', positionFab);
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize', positionFab);
+    window.visualViewport.addEventListener('scroll', positionFab);
   }
 
   function saveToObsidian(reel, id, btn){
