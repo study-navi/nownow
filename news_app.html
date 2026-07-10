@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>NOWNOW - 音楽×教育×AIニュース</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#ff5da2;
+    --purple:#8c5cff;
+    --blue:#3fb5ff;
+    --cyan:#3ee6e0;
+    --green:#3ddc97;
+    --ink:#1a1330;
+    --mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    font-family:'M PLUS Rounded 1c', 'Hiragino Maru Gothic ProN', sans-serif;
+    color:#fff;
+    background:var(--ink);
+    overflow:hidden;
+  }
+
+  /* ---------- top chrome ---------- */
+  .topbar{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:30;
+    padding:14px 14px 10px;
+    padding-top:max(14px, env(safe-area-inset-top));
+    background:linear-gradient(to bottom, rgba(10,6,20,0.55), transparent);
+  }
+  .topbar .row1{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .logo{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    font-weight:800;
+    font-size:19px;
+    letter-spacing:.5px;
+    text-shadow:0 2px 10px rgba(0,0,0,.35);
+  }
+  .logo span.dot{
+    width:9px;height:9px;border-radius:50%;
+    background:#fff;
+    display:inline-block;
+    box-shadow:0 0 10px rgba(255,255,255,.8);
+  }
+  .sync-pill{
+    font-family:var(--mono);
+    font-size:10px;
+    font-weight:600;
+    background:rgba(255,255,255,0.16);
+    padding:5px 10px;
+    border-radius:999px;
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+  }
+
+  .progress-row{
+    display:flex;
+    gap:4px;
+    margin-top:12px;
+  }
+  .progress-seg{
+    flex:1;
+    height:3px;
+    border-radius:3px;
+    background:rgba(255,255,255,0.25);
+    overflow:hidden;
+  }
+  .progress-seg .fill{
+    height:100%;
+    width:0%;
+    background:#fff;
+    border-radius:3px;
+  }
+
+  .cat-row{
+    display:flex;
+    gap:6px;
+    overflow-x:auto;
+    margin-top:12px;
+    scrollbar-width:none;
+  }
+  .cat-row::-webkit-scrollbar{display:none;}
+  .cat-chip{
+    flex:0 0 auto;
+    border:none;
+    cursor:pointer;
+    font-family:inherit;
+    font-weight:700;
+    font-size:12.5px;
+    padding:7px 14px;
+    border-radius:999px;
+    color:#fff;
+    background:rgba(255,255,255,0.18);
+    transition:transform .15s ease, background .15s ease;
+  }
+  .cat-chip.active{
+    background:#fff;
+    color:var(--ink);
+  }
+  .cat-chip:active{transform:scale(.95);}
+
+  /* ---------- reel container ---------- */
+  /* Static-content-first: every slide already exists in the HTML, so the
+     feed works via pure CSS scroll-snap even if JavaScript never runs
+     (e.g. some in-app file previews). JS below only adds category
+     filtering, the progress bar, and the Obsidian save button. */
+  .reels{
+    height:100dvh;
+    height:100vh;
+    overflow-y:scroll;
+    scroll-snap-type:y mandatory;
+    scroll-behavior:smooth;
+  }
+  .reel{
+    height:100dvh;
+    height:100vh;
+    scroll-snap-align:start;
+    scroll-snap-stop:always;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    padding:24px 22px calc(30px + env(safe-area-inset-bottom));
+    overflow:hidden;
+  }
+  .reel.hidden{display:none;}
+  .reel::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px);
+    background-size:32px 32px;
+    mask-image:radial-gradient(ellipse at 50% 30%, black 30%, transparent 75%);
+    pointer-events:none;
+  }
+  .reel.bg-music{background:linear-gradient(165deg,#ff5da2 0%, #ff8a5c 100%);}
+  .reel.bg-edu{background:linear-gradient(165deg,#3fb5ff 0%, #3ddc97 100%);}
+  .reel.bg-ai{background:linear-gradient(165deg,#8c5cff 0%, #3ee6e0 100%);}
+  .reel.bg-cover{background:linear-gradient(165deg,#1a1330 0%, #4a2d8c 55%, #8c5cff 100%);}
+  .reel.bg-outro{background:linear-gradient(165deg,#241a3a 0%, #ff5da2 130%);}
+
+  .reel-content{
+    position:relative;
+    z-index:2;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    padding-right:64px;
+  }
+  .pill-row{display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+  .badge{
+    font-size:11px;
+    font-weight:800;
+    padding:5px 12px;
+    border-radius:999px;
+    background:rgba(255,255,255,0.22);
+  }
+  .date-tag{
+    font-family:var(--mono);
+    font-size:10.5px;
+    font-weight:600;
+    opacity:.85;
+  }
+  .tldr{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:var(--mono);
+    font-size:12px;
+    font-weight:600;
+    background:rgba(0,0,0,0.18);
+    padding:5px 11px;
+    border-radius:8px;
+    width:fit-content;
+  }
+  .reel h2{
+    margin:2px 0 0;
+    font-size:clamp(22px, 6.2vw, 30px);
+    line-height:1.35;
+    font-weight:800;
+    text-shadow:0 2px 16px rgba(0,0,0,.18);
+  }
+  .reel p.desc{
+    margin:0;
+    font-size:15px;
+    line-height:1.7;
+    color:rgba(255,255,255,0.94);
+    max-width:56ch;
+  }
+  .source-line{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:6px;
+    font-size:12.5px;
+  }
+  .source-line .src{
+    font-weight:700;
+    opacity:.9;
+  }
+  .source-line .lang{
+    font-size:10px;
+    background:rgba(255,255,255,0.2);
+    padding:2px 8px;
+    border-radius:999px;
+  }
+  .read-link{
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    font-size:13px;
+    font-weight:800;
+    color:var(--ink);
+    background:#fff;
+    padding:8px 16px;
+    border-radius:999px;
+    text-decoration:none;
+    width:fit-content;
+    margin-top:6px;
+    box-shadow:0 6px 18px rgba(0,0,0,.18);
+  }
+  .read-link:active{transform:scale(.96);}
+
+  /* right-side action rail */
+  .action-rail{
+    position:absolute;
+    right:16px;
+    bottom:calc(34px + env(safe-area-inset-bottom));
+    z-index:3;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:18px;
+  }
+  .like-btn{
+    width:54px;height:54px;
+    border-radius:50%;
+    border:none;
+    cursor:pointer;
+    background:rgba(255,255,255,0.2);
+    color:#fff;
+    font-size:24px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:transform .15s cubic-bezier(.34,1.56,.64,1), background .2s ease, color .2s ease;
+  }
+  .like-btn.saved{
+    background:#fff;
+    color:#ff3d77;
+    transform:scale(1.08);
+  }
+  .like-btn.pop{animation:pop .4s cubic-bezier(.34,1.56,.64,1);}
+  @keyframes pop{
+    0%{transform:scale(1);}
+    40%{transform:scale(1.35);}
+    100%{transform:scale(1.08);}
+  }
+  .like-label{
+    font-family:var(--mono);
+    font-size:9.5px;
+    text-align:center;
+    opacity:.85;
+    margin-top:-10px;
+  }
+
+  /* cover / outro slide styling */
+  .cover-eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    opacity:.8;
+  }
+  .cover-title{
+    font-size:clamp(26px, 8vw, 38px);
+    font-weight:800;
+    line-height:1.3;
+    margin:8px 0 4px;
+  }
+  .cover-text{
+    font-size:15.5px;
+    line-height:1.85;
+    max-width:56ch;
+    opacity:.96;
+  }
+  .swipe-hint{
+    position:absolute;
+    left:50%;
+    bottom:calc(28px + env(safe-area-inset-bottom));
+    transform:translateX(-50%);
+    font-family:var(--mono);
+    font-size:12px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:4px;
+    opacity:.85;
+  }
+  .toast{
+    position:fixed;
+    left:50%;
+    bottom:26px;
+    transform:translateX(-50%) translateY(20px);
+    background:#fff;
+    color:var(--ink);
+    padding:10px 18px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:700;
+    box-shadow:0 8px 24px rgba(0,0,0,.25);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .25s ease, transform .25s ease;
+    z-index:50;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+  noscript .cat-row{display:none;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="row1">
+    <div class="logo"><span class="dot"></span>NOWNOW</div>
+    <div class="sync-pill">SYNC 07:00</div>
+  </div>
+  <div class="progress-row" id="progressRow"></div>
+  <div class="cat-row" id="catRow">
+    <button class="cat-chip active" data-cat="all">✨ すべて</button>
+    <button class="cat-chip" data-cat="music">🎵 音楽</button>
+    <button class="cat-chip" data-cat="edu">📚 教育</button>
+    <button class="cat-chip" data-cat="ai">🤖 AI</button>
+  </div>
+</div>
+
+<!--
+  NOWNOW slides — STATIC HTML (this is the important part)
+  ------------------------------------------------------------------
+  Every slide below is real, already-rendered HTML, not something built
+  by JavaScript at runtime. That's on purpose: some viewers (like iOS
+  Files-app previews) don't run page JavaScript, and this feed must still
+  be readable and swipeable (via plain CSS scroll-snap) even then.
+  JS at the bottom only ADDS: category filtering, the top progress bar,
+  and the ♡ "save to Obsidian" button. None of it is required to read
+  the news.
+
+  Daily update rule for whoever edits this file next: each article slide
+  has data-date="YYYY-MM-DD" (Asia/Tokyo). To publish a new day: add new
+  <div class="reel ..."> slides (copy the structure below) right after
+  the cover slide, tagged with today's date, and delete any slide whose
+  data-date is more than 7 days old. Do not remove the cover/outro slides
+  or change their classes/ids. Keep the digest text in the cover slide
+  updated to summarize today's top stories.
+-->
+
+<div class="reels" id="reels">
+
+  <div class="reel bg-cover" id="coverSlide">
+    <div class="reel-content">
+      <div class="cover-eyebrow">🧠 AI DIGEST · 2026-07-11</div>
+      <div class="cover-title">今日のポイント</div>
+      <p class="cover-text">音楽は乃木坂46や中森明菜、ICExなど日本勢の動きが盛りだくさん。教育は京大の国際卓越認定やWRO Japan開幕など日本の教育現場が熱い。AIはソフトバンクGの巨額出資やNTTデータ×日経連携など、日本企業のAI活用が一気に加速中。</p>
+    </div>
+    <div class="swipe-hint">↑ スワイプして次へ</div>
+  </div>
+
+  <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">7月</span></div>
+      <span class="tldr">🧠 新曲ラインナップ解禁</span>
+      <h2>乃木坂46、最新シングルの収録曲・歌唱メンバーを解禁</h2>
+      <p class="desc">井上和と菅原咲月によるユニット曲を含む全7曲が発表に。センターや選抜メンバーの組み合わせにファンのタイムラインも賑わっている。</p>
+      <div class="source-line"><span class="src">出典: 音楽ナタリー</span></div>
+      <a class="read-link" href="https://natalie.mu/music/news" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">7月</span></div>
+      <span class="tldr">🧠 10年ぶり復活ヒット</span>
+      <h2>中森明菜、約10年ぶりシングルが週間ランキング7位</h2>
+      <p class="desc">シングルTOP10入り作品数が通算30作に到達。ベテランならではの貫禄あるカムバックが話題に。</p>
+      <div class="source-line"><span class="src">出典: ORICON NEWS</span></div>
+      <a class="read-link" href="https://www.oricon.co.jp/news/rank/music/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">7月</span></div>
+      <span class="tldr">🧠 初のオリコン1位</span>
+      <h2>EBiDAN所属ICEx、自身初のオリコン週間1位を獲得</h2>
+      <p class="desc">デビューから着実にファンを増やしてきたICExが、ついに週間音楽ランキングでトップに。次作への期待も高まる。</p>
+      <div class="source-line"><span class="src">出典: ORICON NEWS</span></div>
+      <a class="read-link" href="https://www.oricon.co.jp/news/rank/music/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">7月</span></div>
+      <span class="tldr">🧠 体調不良で公演延期</span>
+      <h2>Dragon Ash・Kj率いるThe Ravens、メンバー入院で公演延期</h2>
+      <p class="desc">メンバーが狭心症と同様の症状で入院したことを受け、ライブの延期・中止が発表された。ファンからは回復を願う声が相次いでいる。</p>
+      <div class="source-line"><span class="src">出典: 音楽ナタリー</span></div>
+      <a class="read-link" href="https://natalie.mu/music/news" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">7/22予定</span></div>
+      <span class="tldr">🧠 アニメ主題歌決定</span>
+      <h2>ReoNa、新アニメ主題歌「Amore」を7/22リリース</h2>
+      <p class="desc">12thシングル「Amore」は、7月7日放送開始の新TVアニメ『きみが死ぬまで恋をしたい』のオープニングテーマに決定。</p>
+      <div class="source-line"><span class="src">出典: 音楽ナタリー</span></div>
+      <a class="read-link" href="https://natalie.mu/music/news" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">7月</span></div>
+      <span class="tldr">🧠 話題アニメの新OP</span>
+      <h2>Kroiの新曲「All in」が『LIAR GAME』第2クールOPに決定</h2>
+      <p class="desc">じわじわ人気を伸ばすバンドKroiの新曲が、話題アニメの第2クールオープニングテーマとして起用されることが決定した。</p>
+      <div class="source-line"><span class="src">出典: 音楽ナタリー</span></div>
+      <a class="read-link" href="https://natalie.mu/music/news" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">7/4</span></div>
+      <span class="tldr">🧠 夏の音楽特番放送</span>
+      <h2>『THE MUSIC DAY 2026』、幕張メッセから9時間半の生放送</h2>
+      <p class="desc">日本テレビ系の夏の音楽特番が7月4日に千葉・幕張メッセから生放送。豪華アーティストが多数出演し話題に。</p>
+      <div class="source-line"><span class="src">出典: 文化通信.com</span></div>
+      <a class="read-link" href="https://www.bunkatsushin.com/news/list.aspx?nc=3" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">7/1付</span></div>
+      <span class="tldr">🧠 週間1位が決定</span>
+      <h2>週間J-POPランキング、1位は吉田仁人「東京」</h2>
+      <p class="desc">6月19日〜25日集計の週間ランキングで「東京」が首位に。2位YENA「ミラミラ」、3位桑田佳祐「人誑し」と続く混戦模様。</p>
+      <div class="source-line"><span class="src">出典: レコチョク</span></div>
+      <a class="read-link" href="https://recochoku.jp/genreranking/j-pop/daily?affiliate=4410101009" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">7月</span></div>
+      <span class="tldr">🧠 K-POP来日ラッシュ</span>
+      <h2>ATEEZ・Le Sserafimら、日本での活動を続々発表</h2>
+      <p class="desc">ATEEZは7/29に日本5枚目シングルをリリース予定。Le Sserafimは日本ツアー「Pureflow」で全国5都市を回るなど、来日ラッシュが続く。</p>
+      <div class="source-line"><span class="src">出典: KPOP OFFICIAL</span><span class="lang">英語→日本語訳</span></div>
+      <a class="read-link" href="https://kpopofficial.com/kpop-comeback-schedule-july-2026/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">2026年上半期</span></div>
+      <span class="tldr">🧠 J-POP逆輸入ブーム</span>
+      <h2>J-POP、韓国で再ブーム中。ストリーミング再生数が半年で30%増</h2>
+      <p class="desc">韓国の音楽ストリーミングサービスGenie Musicの集計で判明。アニメや配信、来日ライブの増加が、韓国のリスナーが日本の曲に出会う機会を押し上げているそう。</p>
+      <div class="source-line"><span class="src">出典: Outlook Respawn</span><span class="lang">英語→日本語訳</span></div>
+      <a class="read-link" href="https://respawn.outlookindia.com/pop-culture/pop-culture-news/jpop-south-korea-streaming-growth-2026" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">2026年</span></div>
+      <span class="tldr">🧠 作曲AIに本気モード</span>
+      <h2>AI作曲サービス「Suno」が2026年の本命ツールに</h2>
+      <p class="desc">誰でも歌詞を打ち込むだけで曲が作れるAIサービスが若者の間で定番化。Googleも作曲AIスタートアップProducerAIを買収するなど、大手も音楽×AIに本腰。</p>
+      <div class="source-line"><span class="src">出典: roboticsandautomationnews.com</span><span class="lang">英語→日本語訳</span></div>
+      <a class="read-link" href="https://roboticsandautomationnews.com/2026/07/01/ai-music-video-generation-10-tools-that-automate-your-creative-workflow-in-2026/102946/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-edu" data-cat="edu" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">📚 教育</span><span class="date-tag">7/6</span></div>
+      <span class="tldr">🧠 京大が国際認定獲得</span>
+      <h2>京都大学が「国際卓越研究大学」に認定</h2>
+      <p class="desc">高校教育改革の先導校75校の採択と合わせて発表。世界トップレベルの研究大学を目指す国の重点支援対象に選ばれた。</p>
+      <div class="source-line"><span class="src">出典: ReseEd（リシード）</span></div>
+      <a class="read-link" href="https://reseed.resemom.jp/article/2026/07/06/13614.html" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-edu" data-cat="edu" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">📚 教育</span><span class="date-tag">7月</span></div>
+      <span class="tldr">🧠 ロボコン開幕</span>
+      <h2>全国の子どもが挑む「WRO Japan 2026」シーズン開幕</h2>
+      <p class="desc">ロボット競技会WRO Japanの新シーズンがスタート。あわせてSTEAM教育スクール「ステモン」も夏休み実験ワークショップを都内5拠点で開催予定。</p>
+      <div class="source-line"><span class="src">出典: ICT教育ニュース</span></div>
+      <a class="read-link" href="https://ict-enews.net/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-edu" data-cat="edu" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">📚 教育</span><span class="date-tag">7月</span></div>
+      <span class="tldr">🧠 学費支援の説明会</span>
+      <h2>近畿大学、困窮家庭向け支援プランのオンライン説明会を開催</h2>
+      <p class="desc">「子どもの未来サポートプラン」について、対象家庭向けにオンラインで詳しく説明する会を実施。進学の経済的ハードルを下げる取り組みの一つ。</p>
+      <div class="source-line"><span class="src">出典: ReseEd（リシード）</span></div>
+      <a class="read-link" href="https://reseed.resemom.jp/article/2026/07/06/13614.html" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-edu" data-cat="edu" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">📚 教育</span><span class="date-tag">2026年</span></div>
+      <span class="tldr">🧠 紙の手書き根強い人気</span>
+      <h2>小学校のタブレット学習調査、約95%が「手書き維持」を希望</h2>
+      <p class="desc">デジタル化が進む一方で、保護者や教員の多くが手書き学習の継続を望んでいることが調査で判明。ICT化と紙のバランスがあらためて議論に。</p>
+      <div class="source-line"><span class="src">出典: ICT教育ニュース</span></div>
+      <a class="read-link" href="https://ict-enews.net/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-edu" data-cat="edu" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">📚 教育</span><span class="date-tag">7月</span></div>
+      <span class="tldr">🧠 AIで難易度自動調整</span>
+      <h2>オンライン英会話「51Talk」、難易度自動調整の新カリキュラム発表</h2>
+      <p class="desc">生徒のレベルに合わせて内容を自動で調整する新カリキュラム「Global Communicator」を発表。個別最適化学習がEdTechのキーワードに。</p>
+      <div class="source-line"><span class="src">出典: ICT教育ニュース</span></div>
+      <a class="read-link" href="https://ict-enews.net/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-edu" data-cat="edu" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">📚 教育</span><span class="date-tag">2026年</span></div>
+      <span class="tldr">🧠 使ってるけど習ってない</span>
+      <h2>学生の92%がすでにAIを課題に活用。でも使い方を習った人は2割強</h2>
+      <p class="desc">Microsoftの2026年調査で判明した数字。生徒の多くが日常的にAIを使う一方、正式なトレーニングを受けた人は約23%にとどまるというギャップが浮き彫りに。</p>
+      <div class="source-line"><span class="src">出典: eSchool News ほか</span><span class="lang">英語→日本語訳</span></div>
+      <a class="read-link" href="https://www.eschoolnews.com/innovative-teaching/2026/01/01/draft-2026-predictions/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-edu" data-cat="edu" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">📚 教育</span><span class="date-tag">7/10</span></div>
+      <span class="tldr">🧠 ガバガバ講座が発覚</span>
+      <h2>「2時間で2講座終了」記者がオンライン講座の“ゆるさ”を検証</h2>
+      <p class="desc">米ワシントン・ポストの記者が実際に受講したところ、内容をほぼ流し見するだけで2つのコースを数時間で修了できてしまったと報告。運営側が急遽仕組みの見直しに着手。</p>
+      <div class="source-line"><span class="src">出典: The Washington Post</span><span class="lang">英語→日本語訳</span></div>
+      <a class="read-link" href="https://www.washingtonpost.com/education/2026/07/10/online-learning-site-makes-changes-after-reporter-finishes-two-classes-hours/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-edu" data-cat="edu" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">📚 教育</span><span class="date-tag">2026年</span></div>
+      <span class="tldr">🧠 AI導入前に審査必須</span>
+      <h2>NYC教育局、学校向けAIツールに「偏見・公平性審査」を義務付け</h2>
+      <p class="desc">導入前にすべてのAIツールへバイアスチェックを課す予備方針を発表。生徒の属性ごとの結果差を確認するコンプライアンス手順書を公開予定。</p>
+      <div class="source-line"><span class="src">出典: Pursuit News</span><span class="lang">英語→日本語訳</span></div>
+      <a class="read-link" href="https://www.pursuit.us/news/ai-in-education-news-policies-innovations" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-edu" data-cat="edu" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">📚 教育</span><span class="date-tag">7月</span></div>
+      <span class="tldr">🧠 AI方針を義務化</span>
+      <h2>オハイオ州、学校向けAI方針を義務化。「代わりにやる道具じゃない」</h2>
+      <p class="desc">コロンバス市の学区が州の義務化に先駆けて正式方針を採用。AIを学びの補助と位置づけ、生徒の努力や教員の判断の代わりにはしないと明記。</p>
+      <div class="source-line"><span class="src">出典: Pursuit News</span><span class="lang">英語→日本語訳</span></div>
+      <a class="read-link" href="https://www.pursuit.us/news/ai-in-education-news-policies-innovations" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-edu" data-cat="edu" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">📚 教育</span><span class="date-tag">7月</span></div>
+      <span class="tldr">🧠 教室にもう1台</span>
+      <h2>教室にもう1台。ASUSが学校向け新型Chromebox「6a」を発表</h2>
+      <p class="desc">第14世代Intel Core 7を搭載し、ゼロタッチ導入やGoogle管理コンソールに対応。一括導入をより簡単にする学校向けデバイスとして登場。</p>
+      <div class="source-line"><span class="src">出典: Tech &amp; Learning</span><span class="lang">英語→日本語訳</span></div>
+      <a class="read-link" href="https://www.techlearning.com/learning/edtech/edtech-show-and-tell-july-2026-istelive-edition" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-ai" data-cat="ai" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">🤖 AI</span><span class="date-tag">7月</span></div>
+      <span class="tldr">🧠 巨額AI投資が完了</span>
+      <h2>ソフトバンクG、100億ドルの出資実行を完了。10月に追加出資も</h2>
+      <p class="desc">大型出資の実行を完了したと発表。さらに10月には第3弾の追加出資も予告されており、AI分野への攻めの投資姿勢が続く。</p>
+      <div class="source-line"><span class="src">出典: 国内テック系メディア</span></div>
+      <a class="read-link" href="https://eguweb.jp/ai/81123/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-ai" data-cat="ai" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">🤖 AI</span><span class="date-tag">7月</span></div>
+      <span class="tldr">🧠 AIで攻撃を先読み</span>
+      <h2>ソフトバンクG×SB OAI Japan、AI駆動サイバーセキュリティ新サービス</h2>
+      <p class="desc">OpenAIの技術を活用した「Patching as a Service」を発表。脆弱性対応を自動化し、攻撃されるより先にパッチを当てる仕組みを目指す。</p>
+      <div class="source-line"><span class="src">出典: 国内テック系メディア</span></div>
+      <a class="read-link" href="https://eguweb.jp/ai/81123/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-ai" data-cat="ai" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">🤖 AI</span><span class="date-tag">7月</span></div>
+      <span class="tldr">🧠 日経データ×生成AI</span>
+      <h2>NTTデータ、日経の法人向け生成AI「NIKKEI KAI」と販売契約</h2>
+      <p class="desc">信頼できる日経の記事・データをAIに接続し、企業の調査・企画・経営判断を支援するサービスの販売で提携。ビジネス現場での実装が加速。</p>
+      <div class="source-line"><span class="src">出典: 国内テック系メディア</span></div>
+      <a class="read-link" href="https://gais.jp/news-2026-07-03/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-ai" data-cat="ai" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">🤖 AI</span><span class="date-tag">7/3</span></div>
+      <span class="tldr">🧠 日印でAI協力強化</span>
+      <h2>日印首脳、AI協力イニシアティブ「JAI」の深化に合意</h2>
+      <p class="desc">日本とインドがAI分野での協力を一段と深めることで合意。人材交流や技術連携を通じて、両国のAI開発力の底上げを狙う。</p>
+      <div class="source-line"><span class="src">出典: 国内テック系メディア</span></div>
+      <a class="read-link" href="https://note.com/clever_shark607/n/ndc4ed972ec5f" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-ai" data-cat="ai" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">🤖 AI</span><span class="date-tag">7/7</span></div>
+      <span class="tldr">🧠 画像生成AIが新登場</span>
+      <h2>Meta、新しい画像生成AI「Muse」を発表</h2>
+      <p class="desc">Meta AIに新モデル「Muse」を統合。写真の修復やスタイル変換、部屋の模様替えシミュレーションなど、自分の写真を使った編集がまとめてできるように。</p>
+      <div class="source-line"><span class="src">出典: 各種テック系メディア</span><span class="lang">英語→日本語訳</span></div>
+      <a class="read-link" href="https://futuretools.io/news" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-ai" data-cat="ai" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">🤖 AI</span><span class="date-tag">7月</span></div>
+      <span class="tldr">🧠 公開延期、監督強化へ</span>
+      <h2>OpenAI、「GPT-5.6」の正式公開を延期</h2>
+      <p class="desc">米政府が早期アクセスと追加の監督を要請したことを受け、より広い一般公開の前に対応を進めている段階とのこと。</p>
+      <div class="source-line"><span class="src">出典: AI Update / MarketingProfs</span><span class="lang">英語→日本語訳</span></div>
+      <a class="read-link" href="https://www.marketingprofs.com/opinions/2026/55197/ai-update-july-3-2026-ai-news-and-views-from-the-past-week" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-ai" data-cat="ai" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">🤖 AI</span><span class="date-tag">2026年</span></div>
+      <span class="tldr">🧠 AIの電気代がヤバい</span>
+      <h2>GoogleのAI拡大で電力・水使用量が過去最高に</h2>
+      <p class="desc">AIインフラの急拡大により、電力消費量は前年比37%増、温室効果ガス排出量は18%増、水使用量は34%増と軒並み過去最高を記録。</p>
+      <div class="source-line"><span class="src">出典: 各種テック系メディア</span><span class="lang">英語→日本語訳</span></div>
+      <a class="read-link" href="https://futuretools.io/news" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-ai" data-cat="ai" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">🤖 AI</span><span class="date-tag">2026年</span></div>
+      <span class="tldr">🧠 米中AI競争が激化</span>
+      <h2>中国発「GLM-5.2」が急浮上。米中AI競争が話題に</h2>
+      <p class="desc">Z.aiが開発した低コストモデル「GLM-5.2」が、米国トップモデルに匹敵する性能を発揮していると評価され、米中のAI競争を象徴する存在に。</p>
+      <div class="source-line"><span class="src">出典: 各種テック系メディア</span><span class="lang">英語→日本語訳</span></div>
+      <a class="read-link" href="https://futuretools.io/news" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-ai" data-cat="ai" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="pill-row"><span class="badge">🤖 AI</span><span class="date-tag">2026年</span></div>
+      <span class="tldr">🧠 実質サブスク商法？</span>
+      <h2>Appleの「Apple Home AI」機能、実はiCloud+ 2TBプラン必須だった</h2>
+      <p class="desc">HomeKitのセキュリティ映像をAIが解析する新機能を使うには、月額の高いストレージプラン加入が必要と判明。SNSでは「実質サブスク商法では」との声も。</p>
+      <div class="source-line"><span class="src">出典: 各種テック系メディア</span><span class="lang">英語→日本語訳</span></div>
+      <a class="read-link" href="https://futuretools.io/news" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+    <div class="action-rail"><div><button class="like-btn" title="Obsidian用メモを保存">♡</button><div class="like-label">保存</div></div></div>
+  </div>
+
+  <div class="reel bg-outro" id="outroSlide">
+    <div class="reel-content">
+      <div class="cover-eyebrow">✨ THAT'S ALL FOR NOW</div>
+      <div class="cover-title">また明日の朝7時にね</div>
+      <p class="cover-text">毎朝7時に自動更新、直近7日分をこのアプリの中に保持してるよ。♡ボタンで気になった記事をObsidian用メモとして保存できるから、気に入ったら忘れずに。</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// Everything below is progressive ENHANCEMENT only — the feed above already
+// works (readable + swipeable via CSS scroll-snap) with zero JavaScript.
+(function(){
+  var reelsEl = document.getElementById('reels');
+  var progressRow = document.getElementById('progressRow');
+  var catChips = document.querySelectorAll('.cat-chip');
+  var toastEl = document.getElementById('toast');
+  var allReels = Array.prototype.slice.call(document.querySelectorAll('.reel'));
+
+  function getSaved(){
+    try{ return JSON.parse(localStorage.getItem('nownow_saved')||'[]'); }catch(e){ return []; }
+  }
+  function setSaved(list){
+    try{ localStorage.setItem('nownow_saved', JSON.stringify(list)); }catch(e){}
+  }
+  function showToast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(function(){ toastEl.classList.remove('show'); }, 1800);
+  }
+  function slugify(str){
+    return str.replace(/[\\/:*?"<>|]/g,'').slice(0,40).trim();
+  }
+
+  function reelId(reel, idx){
+    var h2 = reel.querySelector('h2');
+    return (reel.dataset.date||'') + '_' + idx + '_' + slugify(h2 ? h2.textContent : '');
+  }
+
+  function refreshLikeButtons(){
+    var saved = getSaved();
+    allReels.forEach(function(reel, idx){
+      var btn = reel.querySelector('.like-btn');
+      if(!btn) return;
+      var id = reelId(reel, idx);
+      var isSaved = saved.indexOf(id) !== -1;
+      btn.classList.toggle('saved', isSaved);
+      btn.textContent = isSaved ? '❤' : '♡';
+      var label = reel.querySelector('.like-label');
+      if(label) label.textContent = isSaved ? '保存済み' : '保存';
+    });
+  }
+
+  function saveToObsidian(reel, id, btn){
+    var title = (reel.querySelector('h2')||{}).textContent || '';
+    var desc = (reel.querySelector('.desc')||{}).textContent || '';
+    var srcEl = reel.querySelector('.source-line .src');
+    var source = srcEl ? srcEl.textContent.replace(/^出典:\s*/,'') : '';
+    var linkEl = reel.querySelector('.read-link');
+    var url = linkEl ? linkEl.href : '';
+    var langEl = reel.querySelector('.source-line .lang');
+    var lang = langEl ? langEl.textContent : '';
+    var cat = reel.dataset.cat || '';
+    var date = reel.dataset.date || '';
+    var tagMap = {music:'音楽', edu:'教育', ai:'AI'};
+
+    var md = '---\n' +
+      'title: "' + title.replace(/"/g,'\\"') + '"\n' +
+      'source: "' + source.replace(/"/g,'\\"') + '"\n' +
+      'url: "' + url + '"\n' +
+      'date: "' + date + '"\n' +
+      'tags: [nownow, ' + cat + ']\n' +
+      '---\n\n' +
+      '# ' + title + '\n\n' +
+      desc + '\n\n' +
+      '**カテゴリ**: ' + (tagMap[cat]||cat) + '\n' +
+      '**出典**: ' + source + (lang ? '（' + lang.replace('→日本語訳','記事を和訳') + '）' : '') + '\n' +
+      '**元記事**: ' + url + '\n\n' +
+      '## メモ\n\n';
+
+    var blob = new Blob([md], {type:'text/markdown;charset=utf-8'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = date + '_' + slugify(title) + '.md';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    var saved = getSaved();
+    if(saved.indexOf(id) === -1){
+      saved.push(id);
+      setSaved(saved);
+    }
+    btn.classList.add('saved','pop');
+    btn.textContent = '❤';
+    setTimeout(function(){ btn.classList.remove('pop'); }, 400);
+    showToast('Obsidian用メモを保存しました');
+  }
+
+  allReels.forEach(function(reel, idx){
+    var btn = reel.querySelector('.like-btn');
+    if(!btn) return;
+    btn.addEventListener('click', function(){
+      saveToObsidian(reel, reelId(reel, idx), btn);
+    });
+  });
+  refreshLikeButtons();
+
+  function buildProgress(){
+    progressRow.innerHTML = '';
+    var visible = allReels.filter(function(r){ return !r.classList.contains('hidden'); });
+    visible.forEach(function(){
+      var seg = document.createElement('div');
+      seg.className = 'progress-seg';
+      seg.innerHTML = '<div class="fill"></div>';
+      progressRow.appendChild(seg);
+    });
+  }
+  function updateProgress(){
+    var segs = progressRow.children;
+    var slideH = reelsEl.clientHeight || 1;
+    var pos = reelsEl.scrollTop / slideH;
+    for(var i=0;i<segs.length;i++){
+      var fill = Math.max(0, Math.min(1, pos - i)) * 100;
+      segs[i].querySelector('.fill').style.width = fill + '%';
+    }
+  }
+  var ticking = false;
+  reelsEl.addEventListener('scroll', function(){
+    if(!ticking){
+      requestAnimationFrame(function(){ updateProgress(); ticking=false; });
+      ticking = true;
+    }
+  });
+  window.addEventListener('resize', updateProgress);
+
+  catChips.forEach(function(chip){
+    chip.addEventListener('click', function(){
+      catChips.forEach(function(c){ c.classList.remove('active'); });
+      chip.classList.add('active');
+      var cat = chip.dataset.cat;
+      allReels.forEach(function(reel){
+        if(!reel.dataset.cat) return; // cover / outro always visible
+        reel.classList.toggle('hidden', cat !== 'all' && reel.dataset.cat !== cat);
+      });
+      reelsEl.scrollTo({top:0});
+      buildProgress();
+      updateProgress();
+    });
+  });
+
+  // keyboard support (desktop)
+  document.addEventListener('keydown', function(e){
+    var slideH = reelsEl.clientHeight;
+    if(e.key === 'ArrowDown'){ reelsEl.scrollBy({top:slideH, behavior:'smooth'}); }
+    if(e.key === 'ArrowUp'){ reelsEl.scrollBy({top:-slideH, behavior:'smooth'}); }
+  });
+
+  buildProgress();
+  updateProgress();
+})();
+</script>
+
+</body>
+</html>
