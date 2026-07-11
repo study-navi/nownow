@@ -138,6 +138,17 @@
     overflow:hidden;
   }
   .reel.hidden{display:none;}
+  /* Soft bottom vignette — the kind of depth real video/shorts apps have
+     under their UI chrome, purely decorative and behind the text. */
+  .reel::before{
+    content:"";
+    position:absolute;
+    left:0; right:0; bottom:0;
+    height:42%;
+    background:linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,.34));
+    pointer-events:none;
+    z-index:1;
+  }
   .reel::after{
     content:"";
     position:absolute;
@@ -231,17 +242,38 @@
     color:rgba(255,255,255,0.94);
     max-width:56ch;
   }
+  /* Styled like a social-app "creator chip" (small avatar + handle) rather
+     than a plain citation line — this is purely a CSS restyle of the same
+     existing .source-line/.src markup, so it applies to every slide
+     automatically with no per-article HTML changes. */
   .source-line{
     display:flex;
     align-items:center;
     gap:8px;
     flex-wrap:wrap;
-    margin-top:6px;
+    margin-top:10px;
     font-size:12.5px;
+    background:rgba(0,0,0,0.24);
+    padding:6px 14px 6px 6px;
+    border-radius:999px;
+    width:fit-content;
+    backdrop-filter:blur(4px);
+    -webkit-backdrop-filter:blur(4px);
+  }
+  .source-line::before{
+    content:"📰";
+    width:24px;height:24px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.28);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+    flex:0 0 auto;
   }
   .source-line .src{
-    font-weight:700;
-    opacity:.9;
+    font-weight:800;
+    opacity:.95;
   }
   .source-line .lang{
     font-size:10px;
@@ -1601,6 +1633,10 @@
     <button class="like-btn" id="fabLike" title="Obsidian用メモを保存">♡</button>
     <div class="like-label" id="fabLikeLabel">保存</div>
   </div>
+  <div>
+    <button class="like-btn" id="fabShare" title="記事をシェア">🔗</button>
+    <div class="like-label">シェア</div>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -1769,6 +1805,21 @@
     var idx = allReels.indexOf(activeReel);
     saveToObsidian(activeReel, reelId(activeReel, idx), fabLike);
     fabLikeLabel.textContent = '保存済み';
+  });
+
+  var fabShare = document.getElementById('fabShare');
+  fabShare.addEventListener('click', function(){
+    if(!activeReel) return;
+    var title = (activeReel.querySelector('h2')||{}).textContent || 'NOWNOW';
+    var linkEl = activeReel.querySelector('.read-link');
+    var url = linkEl ? linkEl.href : location.href;
+    if(navigator.share){
+      navigator.share({title:title, url:url}).catch(function(){});
+    } else if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url).then(function(){
+        showToast('リンクをコピーしました');
+      }).catch(function(){});
+    }
   });
 
   function buildProgress(){
