@@ -2615,7 +2615,14 @@
   window.addEventListener('resize', function(){ updateProgress(); updateActiveReel(); });
 
   var catChipsArr = Array.prototype.slice.call(catChips);
-  function applyCategory(chip){
+  // opts.jumpToContent: land directly on the new genre's first article
+  // instead of resetting to the shared cover/wrapped-card slide at the
+  // very top. Used by swipe/keyboard switching, where snapping all the
+  // way back up on every flick felt like the feed was "returning to the
+  // top" instead of smoothly moving sideways into the next genre. Tap-on-
+  // chip keeps the original scroll-to-top behavior (a deliberate restart).
+  function applyCategory(chip, opts){
+    opts = opts || {};
     catChips.forEach(function(c){ c.classList.remove('active'); });
     chip.classList.add('active');
     var cat = chip.dataset.cat;
@@ -2623,7 +2630,21 @@
       if(!reel.dataset.cat) return; // cover / outro / wrapSlide always visible
       reel.classList.toggle('hidden', cat !== 'all' && reel.dataset.cat !== cat);
     });
-    reelsEl.scrollTo({top:0});
+    var target = null;
+    if(opts.jumpToContent && cat !== 'all'){
+      for(var i=0;i<allReels.length;i++){
+        if(allReels[i].dataset.cat === cat){ target = allReels[i]; break; }
+      }
+    }
+    var top = target ? target.offsetTop : 0;
+    // Fired right on the heels of a touch gesture, the browser's own
+    // scroll-snap settle animation can still be resolving — starting our
+    // own smooth-scroll in the same tick makes the two fight and stutter.
+    // Waiting one frame lets that settle first, then behavior:'smooth'
+    // (already the default via CSS) glides cleanly to the target.
+    requestAnimationFrame(function(){
+      reelsEl.scrollTo({top: top, behavior:'smooth'});
+    });
     buildProgress();
     updateProgress();
     updateActiveReel();
@@ -2663,7 +2684,7 @@
       ? (curIdx + 1) % catChipsArr.length
       : (curIdx - 1 + catChipsArr.length) % catChipsArr.length;
     var nextChip = catChipsArr[nextIdx];
-    applyCategory(nextChip);
+    applyCategory(nextChip, {jumpToContent:true});
     showToast(nextChip.textContent.replace(/\s+/g,' ').trim());
   }, {passive:true});
 
@@ -2682,7 +2703,7 @@
         ? (curIdx + 1) % catChipsArr.length
         : (curIdx - 1 + catChipsArr.length) % catChipsArr.length;
       var nextChip = catChipsArr[nextIdx];
-      applyCategory(nextChip);
+      applyCategory(nextChip, {jumpToContent:true});
       showToast(nextChip.textContent.replace(/\s+/g,' ').trim());
     }
   });
