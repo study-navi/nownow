@@ -872,12 +872,17 @@
         (useClipboard ? '&clipboard' : ('&content=' + encodeURIComponent(md)));
       window.location.href = uri;
     }
+    // Important: navigate immediately, in the same synchronous tick as the
+    // click — don't wait on the clipboard promise first. iOS Safari only
+    // treats a custom-scheme navigation (obsidian://...) as user-initiated
+    // if it happens directly inside the click handler; once you await a
+    // promise (even a fast one like clipboard writeText), that "user
+    // gesture" context is gone and Safari silently swallows the navigation.
+    // The clipboard write still finishes well before Obsidian actually
+    // reads it, since the app-switch itself takes longer than the write.
     if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(md).then(function(){
-        openObsidian(true);
-      }).catch(function(){
-        openObsidian(false);
-      });
+      navigator.clipboard.writeText(md).catch(function(){});
+      openObsidian(true);
     } else {
       openObsidian(false);
     }
