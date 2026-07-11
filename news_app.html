@@ -167,6 +167,30 @@
     gap:12px;
     padding-right:64px;
   }
+  /* Original, hand-drawn per-genre glyphs — decorative stand-ins for a real
+     article photo. Using actual news photos would mean copying copyrighted
+     press images, so every slide in a given genre instead shows the same
+     simple original icon for that genre (no external image fetching, no
+     broken links, no rights issues). */
+  .reel-visual{
+    width:60px;height:60px;
+    border-radius:18px;
+    background:rgba(255,255,255,0.2);
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex:0 0 auto;
+  }
+  .reel-visual svg{
+    width:32px;height:32px;
+    stroke:#fff;
+    fill:none;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
   .pill-row{display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
   .badge{
     font-size:11px;
@@ -393,13 +417,434 @@
     <div class="reel-content">
       <div class="cover-eyebrow">🧠 AI DIGEST · 2026-07-11</div>
       <div class="cover-title">今日のポイント</div>
-      <p class="cover-text">音楽は乃木坂46や中森明菜、ICExなど日本勢の動きが盛りだくさん。教育は京大の国際卓越認定やWRO Japan開幕など日本の教育現場が熱い。AIはソフトバンクGの巨額出資やNTTデータ×日経連携など日本企業のAI活用が加速中。スポーツはプロ野球の一発攻勢とサッカー日本代表の動向、エンタメは芸能界の話題が満載、ゲームは注目の新作ラッシュ。</p>
+      <p class="cover-text">音楽はSUPER EIGHTの新曲配信や乃木坂46のシングル情報でにぎやか。教育は明光ネットの調査で「宿題も生成AI」な実態が判明、AIはOpenAIの新機能「ChatGPT Work」や自民党のAI政策提言で動きが加速中。スポーツはプロ野球の熱戦に加え本田圭佑が日本代表監督に名乗りを上げて話題、ゲームはポケモンGO10周年イベントで盛り上がってるよ。</p>
     </div>
     <div class="swipe-hint">↑ スワイプして次へ</div>
   </div>
 
   <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="7" cy="18" r="3"/><circle cx="17" cy="16" r="3"/><path d="M10 18V5l10-2v11"/></svg></div>
+      <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">7/11</span></div>
+      <span class="tldr">🧠 夏の新曲配信開始</span>
+      <h2>SUPER EIGHT、新・夏曲「Do it!!!!!」が本日配信スタート</h2>
+      <p class="desc">5人組グループの最新曲が各音楽配信サービスで一斉解禁。夏らしいアッパーなナンバーにファンのタイムラインも盛り上がっている。</p>
+      <div class="source-line"><span class="src">出典: 音楽ナタリー</span></div>
+      <a class="read-link" href="https://natalie.mu/music/news" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="7" cy="18" r="3"/><circle cx="17" cy="16" r="3"/><path d="M10 18V5l10-2v11"/></svg></div>
+      <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">7/11</span></div>
+      <span class="tldr">🧠 豪華出演者そろい踏み</span>
+      <h2>〈MUSIC FAIR〉本日放送、宮本浩次・NEWS・亀梨和也・JI BLUEが出演</h2>
+      <p class="desc">長寿音楽番組に豪華アーティストが集結。世代を超えたラインナップに音楽ファンから期待の声が上がっている。</p>
+      <div class="source-line"><span class="src">出典: OTOTOY</span></div>
+      <a class="read-link" href="https://ototoy.jp/news/130720" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="7" cy="18" r="3"/><circle cx="17" cy="16" r="3"/><path d="M10 18V5l10-2v11"/></svg></div>
+      <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">7/8発表</span></div>
+      <span class="tldr">🧠 通算11作目の快挙</span>
+      <h2>嵐「Five」、週間ストリーミングランキングで通算11作目の記録達成</h2>
+      <p class="desc">オリコン週間ストリーミングランキングで累積再生数の節目を突破。活動休止後も色褪せない人気の高さを改めて示した。</p>
+      <div class="source-line"><span class="src">出典: ORICON NEWS</span></div>
+      <a class="read-link" href="https://www.oricon.co.jp/news/rank/music/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="7" cy="18" r="3"/><circle cx="17" cy="16" r="3"/><path d="M10 18V5l10-2v11"/></svg></div>
+      <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">7/8発表</span></div>
+      <span class="tldr">🧠 新曲がランクイン</span>
+      <h2>BE:FIRST「Missing」、週間ストリーミングランキングにランクイン</h2>
+      <p class="desc">最新曲がリリース直後から好調な滑り出し。SNSでも歌唱パートやMVの話題でファンが盛り上がっている。</p>
+      <div class="source-line"><span class="src">出典: ORICON NEWS</span></div>
+      <a class="read-link" href="https://www.oricon.co.jp/news/rank/music/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="7" cy="18" r="3"/><circle cx="17" cy="16" r="3"/><path d="M10 18V5l10-2v11"/></svg></div>
+      <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">7/11〜</span></div>
+      <span class="tldr">🧠 夏うたキャンペーン</span>
+      <h2>佐藤健＆K（&amp;TEAM）出演、「#夏うたベスト100」新CM「花火の夏」編が全国放映</h2>
+      <p class="desc">ユニバーサルミュージックによる夏の音楽キャンペーンの新CMが本日から解禁。豪華共演にファンの反響も大きい。</p>
+      <div class="source-line"><span class="src">出典: 音楽ナタリー</span></div>
+      <a class="read-link" href="https://natalie.mu/music/news" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-edu" data-cat="edu" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.6 3 3 6 3s6-1.4 6-3v-5"/></svg></div>
+      <div class="pill-row"><span class="badge">📚 教育</span><span class="date-tag">7/8</span></div>
+      <span class="tldr">🧠 宿題も生成AI時代</span>
+      <h2>小中高生の約半数が勉強・宿題で生成AIを利用と判明</h2>
+      <p class="desc">明光ネットワークジャパンの調査結果。学校の勉強スタイルにAIが急速に溶け込んでいる実態が浮き彫りになった。</p>
+      <div class="source-line"><span class="src">出典: ICT教育ニュース</span></div>
+      <a class="read-link" href="https://ict-enews.net/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-edu" data-cat="edu" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.6 3 3 6 3s6-1.4 6-3v-5"/></svg></div>
+      <div class="pill-row"><span class="badge">📚 教育</span><span class="date-tag">7/8</span></div>
+      <span class="tldr">🧠 学生発の身近な発明</span>
+      <h2>近畿大学の学生、昼休みの行列緩和システムを開発し実証実験</h2>
+      <p class="desc">情報学部の学生が学食の混雑という身近な課題にテクノロジーで挑戦。キャンパスでの実証実験がスタートした。</p>
+      <div class="source-line"><span class="src">出典: ICT教育ニュース</span></div>
+      <a class="read-link" href="https://ict-enews.net/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-edu" data-cat="edu" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.6 3 3 6 3s6-1.4 6-3v-5"/></svg></div>
+      <div class="pill-row"><span class="badge">📚 教育</span><span class="date-tag">7/30予定</span></div>
+      <span class="tldr">🧠 先生向け一大イベント</span>
+      <h2>MetaMoJi、学校・教育関係者向け「MetaMoJi Day 2026」を7月30日開催</h2>
+      <p class="desc">ICT活用の最新事例を学べるイベントを開催予定。授業のデジタル化に取り組む教員たちの参加が見込まれている。</p>
+      <div class="source-line"><span class="src">出典: ICT教育ニュース</span></div>
+      <a class="read-link" href="https://ict-enews.net/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-edu" data-cat="edu" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.6 3 3 6 3s6-1.4 6-3v-5"/></svg></div>
+      <div class="pill-row"><span class="badge">📚 教育</span><span class="date-tag">7/8</span></div>
+      <span class="tldr">🧠 先生同士で学び合う</span>
+      <h2>Too社、教員向け「Teacher's Summit 2026」を東京・大阪で開催へ</h2>
+      <p class="desc">現場の先生同士がICT活用の工夫を共有し合うイベント。教育のデジタル化を後押しする取り組みとして注目されている。</p>
+      <div class="source-line"><span class="src">出典: ICT教育ニュース</span></div>
+      <a class="read-link" href="https://ict-enews.net/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-edu" data-cat="edu" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.6 3 3 6 3s6-1.4 6-3v-5"/></svg></div>
+      <div class="pill-row"><span class="badge">📚 教育</span><span class="date-tag">8/22予定</span></div>
+      <span class="tldr">🧠 授業を見て学ぶ研修</span>
+      <h2>加藤学園、「ICT研修会＠カトガク公開授業研修会」を8月22日に開催</h2>
+      <p class="desc">実際の公開授業を通じてICT活用のノウハウを学べる研修会。他校の教員にも開かれた学びの場となる。</p>
+      <div class="source-line"><span class="src">出典: ICT教育ニュース</span></div>
+      <a class="read-link" href="https://ict-enews.net/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-ai" data-cat="ai" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.1 6.4L21 11l-6.4 2.1L12 20l-2.1-6.9L3 11l6.9-2.1z"/></svg></div>
+      <div class="pill-row"><span class="badge">🤖 AI</span><span class="date-tag">7/10</span></div>
+      <span class="tldr">🧠 仕事を丸ごと任せる</span>
+      <h2>OpenAI、複雑な業務を成果物まで自律実行する「ChatGPT Work」発表</h2>
+      <p class="desc">指示を出すだけで作業からアウトプットまでAIが一貫して行う新機能。ビジネス現場でのAI活用がさらに一歩進みそうだ。</p>
+      <div class="source-line"><span class="src">出典: ITmedia AI+</span></div>
+      <a class="read-link" href="https://www.itmedia.co.jp/aiplus/archive/2607" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-ai" data-cat="ai" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.1 6.4L21 11l-6.4 2.1L12 20l-2.1-6.9L3 11l6.9-2.1z"/></svg></div>
+      <div class="pill-row"><span class="badge">🤖 AI</span><span class="date-tag">7/9</span></div>
+      <span class="tldr">🧠 国も本腰の体制強化</span>
+      <h2>自民党、AI政策推進で緊急提言。内閣府AI政策推進室を80人体制へ拡大</h2>
+      <p class="desc">国レベルでのAI政策の司令塔機能を大幅に強化する方針。急速に進むAI活用に行政側も追いつこうとしている。</p>
+      <div class="source-line"><span class="src">出典: NHKニュース</span></div>
+      <a class="read-link" href="https://news.web.nhk/newsweb/pl/news-nwa-topic-nationwide-0000010" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-ai" data-cat="ai" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.1 6.4L21 11l-6.4 2.1L12 20l-2.1-6.9L3 11l6.9-2.1z"/></svg></div>
+      <div class="pill-row"><span class="badge">🤖 AI</span><span class="date-tag">7月</span></div>
+      <span class="tldr">🧠 米大手と協業強化</span>
+      <h2>アクセンチュア、企業変革加速へAnthropicとの日本協業体制を強化</h2>
+      <p class="desc">AIを中核に据えた企業変革を支援するため、日本国内での連携をさらに深化。国内企業のAI導入支援が加速する見込み。</p>
+      <div class="source-line"><span class="src">出典: アクセンチュア ニュースルーム</span></div>
+      <a class="read-link" href="https://newsroom.accenture.jp/jp/news/2026/accenture-and-anthropic-to-drive-enterprise-reinvention-with-ai-in-japan" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-ai" data-cat="ai" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.1 6.4L21 11l-6.4 2.1L12 20l-2.1-6.9L3 11l6.9-2.1z"/></svg></div>
+      <div class="pill-row"><span class="badge">🤖 AI</span><span class="date-tag">7/3</span></div>
+      <span class="tldr">🧠 政府とAI企業の距離感</span>
+      <h2>OpenAI、米政府に自社株式5%の提供を提案と報道</h2>
+      <p class="desc">政府との連携を深める異例の提案が話題に。AI企業と国家の関係性がますます密接になっていることを象徴する動きだ。</p>
+      <div class="source-line"><span class="src">出典: note（WAN）</span></div>
+      <a class="read-link" href="https://note.com/clever_shark607/n/ndc4ed972ec5f" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-ai" data-cat="ai" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.1 6.4L21 11l-6.4 2.1L12 20l-2.1-6.9L3 11l6.9-2.1z"/></svg></div>
+      <div class="pill-row"><span class="badge">🤖 AI</span><span class="date-tag">7/3</span></div>
+      <span class="tldr">🧠 偏った回答に警鐘</span>
+      <h2>米FTC、AIチャットボットの偏向リスクに警告</h2>
+      <p class="desc">回答の偏りがユーザーに与える影響を懸念する声明を発表。AIチャットボットの信頼性を巡る議論が世界的に広がっている。</p>
+      <div class="source-line"><span class="src">出典: note（WAN）</span></div>
+      <a class="read-link" href="https://note.com/clever_shark607/n/ndc4ed972ec5f" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-sports" data-cat="sports" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3c3.2 3.2 3.2 14.8 0 18M3 12c3.2-3.2 14.8-3.2 18 0"/></svg></div>
+      <div class="pill-row"><span class="badge">⚽ スポーツ</span><span class="date-tag">7/11</span></div>
+      <span class="tldr">🧠 北の大地で熱戦</span>
+      <h2>日本ハムvs西武、エスコンフィールドで本日14時開始</h2>
+      <p class="desc">本拠地での一戦に日本ハムが得点を重ねる展開に。両チームのシーズン後半戦への弾みとなる試合として注目された。</p>
+      <div class="source-line"><span class="src">出典: マイナビニュース</span></div>
+      <a class="read-link" href="https://news.mynavi.jp/article/20260711-4565405/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-sports" data-cat="sports" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3c3.2 3.2 3.2 14.8 0 18M3 12c3.2-3.2 14.8-3.2 18 0"/></svg></div>
+      <div class="pill-row"><span class="badge">⚽ スポーツ</span><span class="date-tag">7/11</span></div>
+      <span class="tldr">🧠 セ・リーグ好カード</span>
+      <h2>中日vs広島、バンテリンドームで本日14時開始</h2>
+      <p class="desc">連勝ムードの中日と巻き返しを図る広島の一戦。両軍のベンチワークにも注目が集まる好カードとなった。</p>
+      <div class="source-line"><span class="src">出典: マイナビニュース</span></div>
+      <a class="read-link" href="https://news.mynavi.jp/article/20260711-4565404/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-sports" data-cat="sports" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3c3.2 3.2 3.2 14.8 0 18M3 12c3.2-3.2 14.8-3.2 18 0"/></svg></div>
+      <div class="pill-row"><span class="badge">⚽ スポーツ</span><span class="date-tag">7/11</span></div>
+      <span class="tldr">🧠 勝負強い一打</span>
+      <h2>ソフトバンク近藤健介、右中間破る2点タイムリー2ベース</h2>
+      <p class="desc">対楽天戦で値千金の一打を放ちチームを勢いづけた。安定した打撃でリーグ屈指の勝負強さを改めて示した。</p>
+      <div class="source-line"><span class="src">出典: スポーツナビ</span></div>
+      <a class="read-link" href="https://sports.yahoo.co.jp/list/news/npb?genre=npb" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-sports" data-cat="sports" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3c3.2 3.2 3.2 14.8 0 18M3 12c3.2-3.2 14.8-3.2 18 0"/></svg></div>
+      <div class="pill-row"><span class="badge">⚽ スポーツ</span><span class="date-tag">7/11</span></div>
+      <span class="tldr">🧠 今季1号アーチ</span>
+      <h2>オリックス来田涼斗、今季第1号となる先制3ランホームラン</h2>
+      <p class="desc">パ・リーグの一戦で待望の初アーチが誕生。若手選手の覚醒にファンからも期待の声が高まっている。</p>
+      <div class="source-line"><span class="src">出典: スポーツナビ</span></div>
+      <a class="read-link" href="https://sports.yahoo.co.jp/list/news/npb?genre=npb" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-sports" data-cat="sports" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3c3.2 3.2 3.2 14.8 0 18M3 12c3.2-3.2 14.8-3.2 18 0"/></svg></div>
+      <div class="pill-row"><span class="badge">⚽ スポーツ</span><span class="date-tag">7月</span></div>
+      <span class="tldr">🧠 「クビでもいい」発言</span>
+      <h2>本田圭佑、日本代表次期監督に名乗り「アジア杯で負けたら問答無用でクビにしてくれていい」</h2>
+      <p class="desc">強気の発言で監督就任への意欲を表明。森保監督の去就が注目される中、後任候補として一気に話題をさらった。</p>
+      <div class="source-line"><span class="src">出典: ゲキサカ</span></div>
+      <a class="read-link" href="https://web.gekisaka.jp/news/nationalteam" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-tech" data-cat="tech" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><circle cx="12" cy="18" r="1"/></svg></div>
+      <div class="pill-row"><span class="badge">📱 テック</span><span class="date-tag">7月中旬</span></div>
+      <span class="tldr">🧠 創業40周年で新デザイン</span>
+      <h2>エレコム、Bluetoothマウス「EGG MOUSE」シリーズを刷新し発売へ</h2>
+      <p class="desc">創業40周年を記念してリデザインされた新モデルが登場。丸みを帯びたフォルムで手になじむ使い心地をうたう。</p>
+      <div class="source-line"><span class="src">出典: 価格.com新製品ニュース</span></div>
+      <a class="read-link" href="https://news.kakaku.com/prdnews/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-tech" data-cat="tech" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><circle cx="12" cy="18" r="1"/></svg></div>
+      <div class="pill-row"><span class="badge">📱 テック</span><span class="date-tag">7/1</span></div>
+      <span class="tldr">🧠 耳を塞がない着け心地</span>
+      <h2>NUARL、イヤーカフ型ワイヤレスイヤホン「νClip スタンダード版」発売</h2>
+      <p class="desc">耳を塞がない独特な装着スタイルが特徴の新製品。通学中や作業中でも周囲の音を聞き取りやすいと注目されている。</p>
+      <div class="source-line"><span class="src">出典: 価格.com新製品ニュース</span></div>
+      <a class="read-link" href="https://news.kakaku.com/prdnews/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-tech" data-cat="tech" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><circle cx="12" cy="18" r="1"/></svg></div>
+      <div class="pill-row"><span class="badge">📱 テック</span><span class="date-tag">7/15</span></div>
+      <span class="tldr">🧠 持ち運べる電源</span>
+      <h2>Jackery Japan、超薄型ポータブル電源「SlimPower H1」発売へ</h2>
+      <p class="desc">薄さにこだわった新型ポータブル電源が登場。キャンプや停電時の備えとして持ち運びやすさをアピールしている。</p>
+      <div class="source-line"><span class="src">出典: テクノエッジ TechnoEdge</span></div>
+      <a class="read-link" href="https://www.techno-edge.net/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-tech" data-cat="tech" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><circle cx="12" cy="18" r="1"/></svg></div>
+      <div class="pill-row"><span class="badge">📱 テック</span><span class="date-tag">8/12予定</span></div>
+      <span class="tldr">🧠 新Pixelの発表会</span>
+      <h2>Google、新端末発表イベント「Made by Google 2026」を8月12日開催と発表</h2>
+      <p class="desc">恒例の新端末お披露目イベントの開催日が確定。新型Pixelシリーズの詳細発表に期待が高まっている。</p>
+      <div class="source-line"><span class="src">出典: テクノエッジ TechnoEdge</span></div>
+      <a class="read-link" href="https://www.techno-edge.net/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-tech" data-cat="tech" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><circle cx="12" cy="18" r="1"/></svg></div>
+      <div class="pill-row"><span class="badge">📱 テック</span><span class="date-tag">7月</span></div>
+      <span class="tldr">🧠 プライバシー対応の代償</span>
+      <h2>Metaのスマートグラス、撮影中LEDを無効化するとカメラ機能ごと使用不可に</h2>
+      <p class="desc">撮影表示ランプを消すアップデートを適用すると、カメラ機能自体が使えなくなる仕様と判明。プライバシー配慮と機能性のトレードオフが話題に。</p>
+      <div class="source-line"><span class="src">出典: テクノエッジ TechnoEdge</span></div>
+      <a class="read-link" href="https://www.techno-edge.net/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-ent" data-cat="ent" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 3l2.4 6.5L21 11l-5 4 1.5 7L12 18.4 6.5 22 8 15l-5-4 6.6-1.5z"/></svg></div>
+      <div class="pill-row"><span class="badge">🎬 エンタメ</span><span class="date-tag">7/11</span></div>
+      <span class="tldr">🧠 自虐まじりの謝罪</span>
+      <h2>石井亮次、"ハラスメント発言"を謝罪「カスタマーハラスメントの権化です、私は！」</h2>
+      <p class="desc">自身の発言について率直に謝罪しつつも自虐コメントで場を和ませる一幕に。誠実な対応がSNSでも話題になっている。</p>
+      <div class="source-line"><span class="src">出典: 芸トピ</span></div>
+      <a class="read-link" href="https://geitopi.com/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-ent" data-cat="ent" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 3l2.4 6.5L21 11l-5 4 1.5 7L12 18.4 6.5 22 8 15l-5-4 6.6-1.5z"/></svg></div>
+      <div class="pill-row"><span class="badge">🎬 エンタメ</span><span class="date-tag">7/11</span></div>
+      <span class="tldr">🧠 突然の体調不良</span>
+      <h2>最上もが、夜に突如体調不良「急に頭痛と倦怠感、吐き気に襲われて…」</h2>
+      <p class="desc">自身のSNSで体調の異変を明かし、ファンからは心配と回復を願う声が続々と寄せられている。</p>
+      <div class="source-line"><span class="src">出典: 芸トピ</span></div>
+      <a class="read-link" href="https://geitopi.com/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-ent" data-cat="ent" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 3l2.4 6.5L21 11l-5 4 1.5 7L12 18.4 6.5 22 8 15l-5-4 6.6-1.5z"/></svg></div>
+      <div class="pill-row"><span class="badge">🎬 エンタメ</span><span class="date-tag">7/11</span></div>
+      <span class="tldr">🧠 感動の出産秘話</span>
+      <h2>筧美和子、友人の第1子誕生までのストーリーをYouTubeで公開</h2>
+      <p class="desc">親しい友人の出産までの道のりを本人が綴った動画を公開。率直な言葉に感動したという反響が広がっている。</p>
+      <div class="source-line"><span class="src">出典: ORICON NEWS</span></div>
+      <a class="read-link" href="https://www.oricon.co.jp/entertainment/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-ent" data-cat="ent" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 3l2.4 6.5L21 11l-5 4 1.5 7L12 18.4 6.5 22 8 15l-5-4 6.6-1.5z"/></svg></div>
+      <div class="pill-row"><span class="badge">🎬 エンタメ</span><span class="date-tag">7月</span></div>
+      <span class="tldr">🧠 バラエティ出演増加中</span>
+      <h2>岡田准一、『THE FLOOR』『今さらシロー!』でMCレギュラー化</h2>
+      <p class="desc">独立後に活動の幅が広がり、バラエティ番組への出演が増加。新たな一面を見せる機会として注目されている。</p>
+      <div class="source-line"><span class="src">出典: 芸トピ</span></div>
+      <a class="read-link" href="https://geitopi.com/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-ent" data-cat="ent" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 3l2.4 6.5L21 11l-5 4 1.5 7L12 18.4 6.5 22 8 15l-5-4 6.6-1.5z"/></svg></div>
+      <div class="pill-row"><span class="badge">🎬 エンタメ</span><span class="date-tag">7/11</span></div>
+      <span class="tldr">🧠 5ヶ月ぶりの近況報告</span>
+      <h2>優木まおみ、マレーシア在住のまま5ヶ月ぶりにSNSを更新</h2>
+      <p class="desc">久しぶりの投稿にファンから歓迎の声が殺到。海外での暮らしぶりが伝わる内容に注目が集まっている。</p>
+      <div class="source-line"><span class="src">出典: ORICON NEWS</span></div>
+      <a class="read-link" href="https://www.oricon.co.jp/entertainment/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-game" data-cat="game" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="9" rx="4"/><path d="M8 10.5v4M6 12.5h4"/><circle cx="16" cy="11" r="1"/><circle cx="18.2" cy="13.5" r="1"/></svg></div>
+      <div class="pill-row"><span class="badge">🎮 ゲーム</span><span class="date-tag">7月</span></div>
+      <span class="tldr">🧠 初のハイエンド挑戦</span>
+      <h2>Cygames、初のコンシューマー向けハイエンドタイトル『Project Awakening』開発が本格化</h2>
+      <p class="desc">長らく情報が途絶えていた大型プロジェクトが動き出したと報道。本格始動のニュースにファンの期待が再燃している。</p>
+      <div class="source-line"><span class="src">出典: インサイド</span></div>
+      <a class="read-link" href="https://www.inside-games.jp/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-game" data-cat="game" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="9" rx="4"/><path d="M8 10.5v4M6 12.5h4"/><circle cx="16" cy="11" r="1"/><circle cx="18.2" cy="13.5" r="1"/></svg></div>
+      <div class="pill-row"><span class="badge">🎮 ゲーム</span><span class="date-tag">7/23予定</span></div>
+      <span class="tldr">🧠 異色タイトル同士が共演</span>
+      <h2>『リバース：1999』、『Atomic Heart』との異色コラボを7月23日に実装</h2>
+      <p class="desc">世紀末タイムリバースRPGと近未来SFアクションの組み合わせが話題を呼んでいる。コラボ限定コンテンツにも注目。</p>
+      <div class="source-line"><span class="src">出典: インサイド</span></div>
+      <a class="read-link" href="https://www.inside-games.jp/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-game" data-cat="game" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="9" rx="4"/><path d="M8 10.5v4M6 12.5h4"/><circle cx="16" cy="11" r="1"/><circle cx="18.2" cy="13.5" r="1"/></svg></div>
+      <div class="pill-row"><span class="badge">🎮 ゲーム</span><span class="date-tag">7/11-12</span></div>
+      <span class="tldr">🧠 世界的な記念イベント</span>
+      <h2>『Pokémon GO』10周年、NYタイムズスクエアでサプライズイベント開催</h2>
+      <p class="desc">サービス開始10周年を記念した特別企画がニューヨークで実施。ゲーム内でも本日と明日に関連イベントが行われている。</p>
+      <div class="source-line"><span class="src">出典: ファミ通.com</span><span class="lang">英語→日本語訳</span></div>
+      <a class="read-link" href="https://www.famitsu.com/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-game" data-cat="game" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="9" rx="4"/><path d="M8 10.5v4M6 12.5h4"/><circle cx="16" cy="11" r="1"/><circle cx="18.2" cy="13.5" r="1"/></svg></div>
+      <div class="pill-row"><span class="badge">🎮 ゲーム</span><span class="date-tag">7月</span></div>
+      <span class="tldr">🧠 伝説級が無料実装</span>
+      <h2>『Pokémon GO』、「メガミュウツーX/Y」が完全無料で実装</h2>
+      <p class="desc">これまで課金要素だった強力なメガシンカが誰でも挑戦できるように。「GOフェス2026 グローバル」に向けても盛り上がりを見せている。</p>
+      <div class="source-line"><span class="src">出典: インサイド</span></div>
+      <a class="read-link" href="https://www.inside-games.jp/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-game" data-cat="game" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="9" rx="4"/><path d="M8 10.5v4M6 12.5h4"/><circle cx="16" cy="11" r="1"/><circle cx="18.2" cy="13.5" r="1"/></svg></div>
+      <div class="pill-row"><span class="badge">🎮 ゲーム</span><span class="date-tag">7/9</span></div>
+      <span class="tldr">🧠 大型DLCが配信中</span>
+      <h2>『グランブルーファンタジー：リリンク』、大型追加コンテンツ「Endless Ragnarok」配信開始</h2>
+      <p class="desc">発売から人気を保つアクションRPGに新たなボリュームが追加。やり込み要素を求めるファンから歓迎の声が上がっている。</p>
+      <div class="source-line"><span class="src">出典: PlayStation Blog</span></div>
+      <a class="read-link" href="https://blog.ja.playstation.com/" target="_blank" rel="noopener">元記事を読む →</a>
+    </div>
+  </div>
+
+  <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
+    <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="7" cy="18" r="3"/><circle cx="17" cy="16" r="3"/><path d="M10 18V5l10-2v11"/></svg></div>
       <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 新曲ラインナップ解禁</span>
       <h2>乃木坂46、最新シングルの収録曲・歌唱メンバーを解禁</h2>
@@ -411,6 +856,7 @@
 
   <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="7" cy="18" r="3"/><circle cx="17" cy="16" r="3"/><path d="M10 18V5l10-2v11"/></svg></div>
       <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 10年ぶり復活ヒット</span>
       <h2>中森明菜、約10年ぶりシングルが週間ランキング7位</h2>
@@ -422,6 +868,7 @@
 
   <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="7" cy="18" r="3"/><circle cx="17" cy="16" r="3"/><path d="M10 18V5l10-2v11"/></svg></div>
       <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 初のオリコン1位</span>
       <h2>EBiDAN所属ICEx、自身初のオリコン週間1位を獲得</h2>
@@ -433,6 +880,7 @@
 
   <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="7" cy="18" r="3"/><circle cx="17" cy="16" r="3"/><path d="M10 18V5l10-2v11"/></svg></div>
       <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 体調不良で公演延期</span>
       <h2>Dragon Ash・Kj率いるThe Ravens、メンバー入院で公演延期</h2>
@@ -444,6 +892,7 @@
 
   <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="7" cy="18" r="3"/><circle cx="17" cy="16" r="3"/><path d="M10 18V5l10-2v11"/></svg></div>
       <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">7/22予定</span></div>
       <span class="tldr">🧠 アニメ主題歌決定</span>
       <h2>ReoNa、新アニメ主題歌「Amore」を7/22リリース</h2>
@@ -455,6 +904,7 @@
 
   <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="7" cy="18" r="3"/><circle cx="17" cy="16" r="3"/><path d="M10 18V5l10-2v11"/></svg></div>
       <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 話題アニメの新OP</span>
       <h2>Kroiの新曲「All in」が『LIAR GAME』第2クールOPに決定</h2>
@@ -466,6 +916,7 @@
 
   <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="7" cy="18" r="3"/><circle cx="17" cy="16" r="3"/><path d="M10 18V5l10-2v11"/></svg></div>
       <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">7/4</span></div>
       <span class="tldr">🧠 夏の音楽特番放送</span>
       <h2>『THE MUSIC DAY 2026』、幕張メッセから9時間半の生放送</h2>
@@ -477,6 +928,7 @@
 
   <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="7" cy="18" r="3"/><circle cx="17" cy="16" r="3"/><path d="M10 18V5l10-2v11"/></svg></div>
       <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">7/1付</span></div>
       <span class="tldr">🧠 週間1位が決定</span>
       <h2>週間J-POPランキング、1位は吉田仁人「東京」</h2>
@@ -488,6 +940,7 @@
 
   <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="7" cy="18" r="3"/><circle cx="17" cy="16" r="3"/><path d="M10 18V5l10-2v11"/></svg></div>
       <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 K-POP来日ラッシュ</span>
       <h2>ATEEZ・Le Sserafimら、日本での活動を続々発表</h2>
@@ -499,6 +952,7 @@
 
   <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="7" cy="18" r="3"/><circle cx="17" cy="16" r="3"/><path d="M10 18V5l10-2v11"/></svg></div>
       <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">2026年上半期</span></div>
       <span class="tldr">🧠 J-POP逆輸入ブーム</span>
       <h2>J-POP、韓国で再ブーム中。ストリーミング再生数が半年で30%増</h2>
@@ -510,6 +964,7 @@
 
   <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="7" cy="18" r="3"/><circle cx="17" cy="16" r="3"/><path d="M10 18V5l10-2v11"/></svg></div>
       <div class="pill-row"><span class="badge">🎵 音楽</span><span class="date-tag">2026年</span></div>
       <span class="tldr">🧠 作曲AIに本気モード</span>
       <h2>AI作曲サービス「Suno」が2026年の本命ツールに</h2>
@@ -521,6 +976,7 @@
 
   <div class="reel bg-edu" data-cat="edu" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.6 3 3 6 3s6-1.4 6-3v-5"/></svg></div>
       <div class="pill-row"><span class="badge">📚 教育</span><span class="date-tag">7/6</span></div>
       <span class="tldr">🧠 京大が国際認定獲得</span>
       <h2>京都大学が「国際卓越研究大学」に認定</h2>
@@ -532,6 +988,7 @@
 
   <div class="reel bg-edu" data-cat="edu" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.6 3 3 6 3s6-1.4 6-3v-5"/></svg></div>
       <div class="pill-row"><span class="badge">📚 教育</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 ロボコン開幕</span>
       <h2>全国の子どもが挑む「WRO Japan 2026」シーズン開幕</h2>
@@ -543,6 +1000,7 @@
 
   <div class="reel bg-edu" data-cat="edu" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.6 3 3 6 3s6-1.4 6-3v-5"/></svg></div>
       <div class="pill-row"><span class="badge">📚 教育</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 学費支援の説明会</span>
       <h2>近畿大学、困窮家庭向け支援プランのオンライン説明会を開催</h2>
@@ -554,6 +1012,7 @@
 
   <div class="reel bg-edu" data-cat="edu" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.6 3 3 6 3s6-1.4 6-3v-5"/></svg></div>
       <div class="pill-row"><span class="badge">📚 教育</span><span class="date-tag">2026年</span></div>
       <span class="tldr">🧠 紙の手書き根強い人気</span>
       <h2>小学校のタブレット学習調査、約95%が「手書き維持」を希望</h2>
@@ -565,6 +1024,7 @@
 
   <div class="reel bg-edu" data-cat="edu" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.6 3 3 6 3s6-1.4 6-3v-5"/></svg></div>
       <div class="pill-row"><span class="badge">📚 教育</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 AIで難易度自動調整</span>
       <h2>オンライン英会話「51Talk」、難易度自動調整の新カリキュラム発表</h2>
@@ -576,6 +1036,7 @@
 
   <div class="reel bg-edu" data-cat="edu" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.6 3 3 6 3s6-1.4 6-3v-5"/></svg></div>
       <div class="pill-row"><span class="badge">📚 教育</span><span class="date-tag">2026年</span></div>
       <span class="tldr">🧠 使ってるけど習ってない</span>
       <h2>学生の92%がすでにAIを課題に活用。でも使い方を習った人は2割強</h2>
@@ -587,6 +1048,7 @@
 
   <div class="reel bg-edu" data-cat="edu" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.6 3 3 6 3s6-1.4 6-3v-5"/></svg></div>
       <div class="pill-row"><span class="badge">📚 教育</span><span class="date-tag">7/10</span></div>
       <span class="tldr">🧠 ガバガバ講座が発覚</span>
       <h2>「2時間で2講座終了」記者がオンライン講座の“ゆるさ”を検証</h2>
@@ -598,6 +1060,7 @@
 
   <div class="reel bg-edu" data-cat="edu" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.6 3 3 6 3s6-1.4 6-3v-5"/></svg></div>
       <div class="pill-row"><span class="badge">📚 教育</span><span class="date-tag">2026年</span></div>
       <span class="tldr">🧠 AI導入前に審査必須</span>
       <h2>NYC教育局、学校向けAIツールに「偏見・公平性審査」を義務付け</h2>
@@ -609,6 +1072,7 @@
 
   <div class="reel bg-edu" data-cat="edu" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.6 3 3 6 3s6-1.4 6-3v-5"/></svg></div>
       <div class="pill-row"><span class="badge">📚 教育</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 AI方針を義務化</span>
       <h2>オハイオ州、学校向けAI方針を義務化。「代わりにやる道具じゃない」</h2>
@@ -620,6 +1084,7 @@
 
   <div class="reel bg-edu" data-cat="edu" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.6 3 3 6 3s6-1.4 6-3v-5"/></svg></div>
       <div class="pill-row"><span class="badge">📚 教育</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 教室にもう1台</span>
       <h2>教室にもう1台。ASUSが学校向け新型Chromebox「6a」を発表</h2>
@@ -631,6 +1096,7 @@
 
   <div class="reel bg-ai" data-cat="ai" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.1 6.4L21 11l-6.4 2.1L12 20l-2.1-6.9L3 11l6.9-2.1z"/></svg></div>
       <div class="pill-row"><span class="badge">🤖 AI</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 巨額AI投資が完了</span>
       <h2>ソフトバンクG、100億ドルの出資実行を完了。10月に追加出資も</h2>
@@ -642,6 +1108,7 @@
 
   <div class="reel bg-ai" data-cat="ai" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.1 6.4L21 11l-6.4 2.1L12 20l-2.1-6.9L3 11l6.9-2.1z"/></svg></div>
       <div class="pill-row"><span class="badge">🤖 AI</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 AIで攻撃を先読み</span>
       <h2>ソフトバンクG×SB OAI Japan、AI駆動サイバーセキュリティ新サービス</h2>
@@ -653,6 +1120,7 @@
 
   <div class="reel bg-ai" data-cat="ai" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.1 6.4L21 11l-6.4 2.1L12 20l-2.1-6.9L3 11l6.9-2.1z"/></svg></div>
       <div class="pill-row"><span class="badge">🤖 AI</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 日経データ×生成AI</span>
       <h2>NTTデータ、日経の法人向け生成AI「NIKKEI KAI」と販売契約</h2>
@@ -664,6 +1132,7 @@
 
   <div class="reel bg-ai" data-cat="ai" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.1 6.4L21 11l-6.4 2.1L12 20l-2.1-6.9L3 11l6.9-2.1z"/></svg></div>
       <div class="pill-row"><span class="badge">🤖 AI</span><span class="date-tag">7/3</span></div>
       <span class="tldr">🧠 日印でAI協力強化</span>
       <h2>日印首脳、AI協力イニシアティブ「JAI」の深化に合意</h2>
@@ -675,6 +1144,7 @@
 
   <div class="reel bg-ai" data-cat="ai" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.1 6.4L21 11l-6.4 2.1L12 20l-2.1-6.9L3 11l6.9-2.1z"/></svg></div>
       <div class="pill-row"><span class="badge">🤖 AI</span><span class="date-tag">7/7</span></div>
       <span class="tldr">🧠 画像生成AIが新登場</span>
       <h2>Meta、新しい画像生成AI「Muse」を発表</h2>
@@ -686,6 +1156,7 @@
 
   <div class="reel bg-ai" data-cat="ai" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.1 6.4L21 11l-6.4 2.1L12 20l-2.1-6.9L3 11l6.9-2.1z"/></svg></div>
       <div class="pill-row"><span class="badge">🤖 AI</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 公開延期、監督強化へ</span>
       <h2>OpenAI、「GPT-5.6」の正式公開を延期</h2>
@@ -697,6 +1168,7 @@
 
   <div class="reel bg-ai" data-cat="ai" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.1 6.4L21 11l-6.4 2.1L12 20l-2.1-6.9L3 11l6.9-2.1z"/></svg></div>
       <div class="pill-row"><span class="badge">🤖 AI</span><span class="date-tag">2026年</span></div>
       <span class="tldr">🧠 AIの電気代がヤバい</span>
       <h2>GoogleのAI拡大で電力・水使用量が過去最高に</h2>
@@ -708,6 +1180,7 @@
 
   <div class="reel bg-ai" data-cat="ai" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.1 6.4L21 11l-6.4 2.1L12 20l-2.1-6.9L3 11l6.9-2.1z"/></svg></div>
       <div class="pill-row"><span class="badge">🤖 AI</span><span class="date-tag">2026年</span></div>
       <span class="tldr">🧠 米中AI競争が激化</span>
       <h2>中国発「GLM-5.2」が急浮上。米中AI競争が話題に</h2>
@@ -719,6 +1192,7 @@
 
   <div class="reel bg-ai" data-cat="ai" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.1 6.4L21 11l-6.4 2.1L12 20l-2.1-6.9L3 11l6.9-2.1z"/></svg></div>
       <div class="pill-row"><span class="badge">🤖 AI</span><span class="date-tag">2026年</span></div>
       <span class="tldr">🧠 実質サブスク商法？</span>
       <h2>Appleの「Apple Home AI」機能、実はiCloud+ 2TBプラン必須だった</h2>
@@ -730,6 +1204,7 @@
 
   <div class="reel bg-sports" data-cat="sports" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3c3.2 3.2 3.2 14.8 0 18M3 12c3.2-3.2 14.8-3.2 18 0"/></svg></div>
       <div class="pill-row"><span class="badge">⚽ スポーツ</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 3試合連発</span>
       <h2>中日サノー、3試合連続本塁打で今季11号</h2>
@@ -741,6 +1216,7 @@
 
   <div class="reel bg-sports" data-cat="sports" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3c3.2 3.2 3.2 14.8 0 18M3 12c3.2-3.2 14.8-3.2 18 0"/></svg></div>
       <div class="pill-row"><span class="badge">⚽ スポーツ</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 130m超えアーチ2発</span>
       <h2>楽天マッカスカー、2打席連発の特大ホームラン</h2>
@@ -752,6 +1228,7 @@
 
   <div class="reel bg-sports" data-cat="sports" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3c3.2 3.2 3.2 14.8 0 18M3 12c3.2-3.2 14.8-3.2 18 0"/></svg></div>
       <div class="pill-row"><span class="badge">⚽ スポーツ</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 42日ぶり実戦復帰</span>
       <h2>村上宗隆、42日ぶりにメジャーの試合に復帰</h2>
@@ -763,6 +1240,7 @@
 
   <div class="reel bg-sports" data-cat="sports" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3c3.2 3.2 3.2 14.8 0 18M3 12c3.2-3.2 14.8-3.2 18 0"/></svg></div>
       <div class="pill-row"><span class="badge">⚽ スポーツ</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 4大会ぶり4強</span>
       <h2>W杯、スペインがベルギーを2-1で下し準決勝進出</h2>
@@ -774,6 +1252,7 @@
 
   <div class="reel bg-sports" data-cat="sports" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3c3.2 3.2 3.2 14.8 0 18M3 12c3.2-3.2 14.8-3.2 18 0"/></svg></div>
       <div class="pill-row"><span class="badge">⚽ スポーツ</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 メジャー大会で5位浮上</span>
       <h2>山下美夢有、エビアン選手権で5位に浮上</h2>
@@ -785,6 +1264,7 @@
 
   <div class="reel bg-sports" data-cat="sports" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3c3.2 3.2 3.2 14.8 0 18M3 12c3.2-3.2 14.8-3.2 18 0"/></svg></div>
       <div class="pill-row"><span class="badge">⚽ スポーツ</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 続投オファーの行方</span>
       <h2>サッカー日本代表、森保監督の短期続投巡り会長コメント</h2>
@@ -796,6 +1276,7 @@
 
   <div class="reel bg-sports" data-cat="sports" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3c3.2 3.2 3.2 14.8 0 18M3 12c3.2-3.2 14.8-3.2 18 0"/></svg></div>
       <div class="pill-row"><span class="badge">⚽ スポーツ</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 名門クラブが苦慮</span>
       <h2>日本代表GK、移籍問題でイタリア名門クラブが苦慮か</h2>
@@ -807,6 +1288,7 @@
 
   <div class="reel bg-sports" data-cat="sports" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3c3.2 3.2 3.2 14.8 0 18M3 12c3.2-3.2 14.8-3.2 18 0"/></svg></div>
       <div class="pill-row"><span class="badge">⚽ スポーツ</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 突きつけられた現実</span>
       <h2>"史上最強"日本代表、格下相手に敗れ課題浮き彫りに</h2>
@@ -818,6 +1300,7 @@
 
   <div class="reel bg-tech" data-cat="tech" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><circle cx="12" cy="18" r="1"/></svg></div>
       <div class="pill-row"><span class="badge">📱 テック</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 7/22ロンドンで発表</span>
       <h2>サムスン、夏のGalaxy Unpackedを7月22日に開催と発表</h2>
@@ -829,6 +1312,7 @@
 
   <div class="reel bg-tech" data-cat="tech" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><circle cx="12" cy="18" r="1"/></svg></div>
       <div class="pill-row"><span class="badge">📱 テック</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 7/14に新型発表</span>
       <h2>Huawei、新型「MatePad Air」を7月14日発表へ</h2>
@@ -840,6 +1324,7 @@
 
   <div class="reel bg-tech" data-cat="tech" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><circle cx="12" cy="18" r="1"/></svg></div>
       <div class="pill-row"><span class="badge">📱 テック</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 先行セール開催中</span>
       <h2>Amazonプライムデー、7月7日から先行セール開始</h2>
@@ -851,6 +1336,7 @@
 
   <div class="reel bg-tech" data-cat="tech" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><circle cx="12" cy="18" r="1"/></svg></div>
       <div class="pill-row"><span class="badge">📱 テック</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 7/16発売</span>
       <h2>ロジクールG、新型有線ゲーミングキーボード発売</h2>
@@ -862,6 +1348,7 @@
 
   <div class="reel bg-tech" data-cat="tech" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><circle cx="12" cy="18" r="1"/></svg></div>
       <div class="pill-row"><span class="badge">📱 テック</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 AI機能を深く統合</span>
       <h2>Apple、Siriなど端末全体のAI機能強化を発表</h2>
@@ -873,6 +1360,7 @@
 
   <div class="reel bg-tech" data-cat="tech" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><circle cx="12" cy="18" r="1"/></svg></div>
       <div class="pill-row"><span class="badge">📱 テック</span><span class="date-tag">4月</span></div>
       <span class="tldr">🧠 国内独占販売</span>
       <h2>ソフトバンク「Natural AI Phone」、意図を先読みする新端末</h2>
@@ -884,6 +1372,7 @@
 
   <div class="reel bg-tech" data-cat="tech" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><circle cx="12" cy="18" r="1"/></svg></div>
       <div class="pill-row"><span class="badge">📱 テック</span><span class="date-tag">5月</span></div>
       <span class="tldr">🧠 この夏から順次展開</span>
       <h2>Google「Gemini Intelligence」、Androidへの搭載を発表</h2>
@@ -895,6 +1384,7 @@
 
   <div class="reel bg-tech" data-cat="tech" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><circle cx="12" cy="18" r="1"/></svg></div>
       <div class="pill-row"><span class="badge">📱 テック</span><span class="date-tag">4月</span></div>
       <span class="tldr">🧠 発表時期が前倒しに</span>
       <h2>スマホ新機種発表ラッシュ、2026年は「4月」に前倒し</h2>
@@ -906,6 +1396,7 @@
 
   <div class="reel bg-ent" data-cat="ent" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 3l2.4 6.5L21 11l-5 4 1.5 7L12 18.4 6.5 22 8 15l-5-4 6.6-1.5z"/></svg></div>
       <div class="pill-row"><span class="badge">🎬 エンタメ</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 新サロン始動</span>
       <h2>大野智、タトゥーを初公開し個人サロン「さと島」始動</h2>
@@ -917,6 +1408,7 @@
 
   <div class="reel bg-ent" data-cat="ent" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 3l2.4 6.5L21 11l-5 4 1.5 7L12 18.4 6.5 22 8 15l-5-4 6.6-1.5z"/></svg></div>
       <div class="pill-row"><span class="badge">🎬 エンタメ</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 無期限静養との報道</span>
       <h2>佐藤二朗、精神的な落ち込みから活動休止と報道</h2>
@@ -928,6 +1420,7 @@
 
   <div class="reel bg-ent" data-cat="ent" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 3l2.4 6.5L21 11l-5 4 1.5 7L12 18.4 6.5 22 8 15l-5-4 6.6-1.5z"/></svg></div>
       <div class="pill-row"><span class="badge">🎬 エンタメ</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 ハラスメント疑惑報道</span>
       <h2>橋本愛、ハラスメント疑惑をめぐりドラマ降板と報道</h2>
@@ -939,6 +1432,7 @@
 
   <div class="reel bg-ent" data-cat="ent" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 3l2.4 6.5L21 11l-5 4 1.5 7L12 18.4 6.5 22 8 15l-5-4 6.6-1.5z"/></svg></div>
       <div class="pill-row"><span class="badge">🎬 エンタメ</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 顔出し解禁が間近?</span>
       <h2>Ado、日産スタジアムライブで素顔の一部を披露</h2>
@@ -950,6 +1444,7 @@
 
   <div class="reel bg-ent" data-cat="ent" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 3l2.4 6.5L21 11l-5 4 1.5 7L12 18.4 6.5 22 8 15l-5-4 6.6-1.5z"/></svg></div>
       <div class="pill-row"><span class="badge">🎬 エンタメ</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 20年ぶりの好評価</span>
       <h2>中森明菜、20年ぶりバラエティー出演が好評</h2>
@@ -961,6 +1456,7 @@
 
   <div class="reel bg-ent" data-cat="ent" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 3l2.4 6.5L21 11l-5 4 1.5 7L12 18.4 6.5 22 8 15l-5-4 6.6-1.5z"/></svg></div>
       <div class="pill-row"><span class="badge">🎬 エンタメ</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 国際結婚を公表</span>
       <h2>フィギュアの村主章枝さん、国際結婚を公表</h2>
@@ -972,6 +1468,7 @@
 
   <div class="reel bg-ent" data-cat="ent" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 3l2.4 6.5L21 11l-5 4 1.5 7L12 18.4 6.5 22 8 15l-5-4 6.6-1.5z"/></svg></div>
       <div class="pill-row"><span class="badge">🎬 エンタメ</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 熱愛報道</span>
       <h2>サッカー中村敬斗選手に熱愛報道、交際匂わせも</h2>
@@ -983,6 +1480,7 @@
 
   <div class="reel bg-ent" data-cat="ent" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><path d="M12 3l2.4 6.5L21 11l-5 4 1.5 7L12 18.4 6.5 22 8 15l-5-4 6.6-1.5z"/></svg></div>
       <div class="pill-row"><span class="badge">🎬 エンタメ</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 華やかな再婚パーティー</span>
       <h2>ゴルフの古閑美保さん、再婚パーティーの様子が話題に</h2>
@@ -994,6 +1492,7 @@
 
   <div class="reel bg-game" data-cat="game" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="9" rx="4"/><path d="M8 10.5v4M6 12.5h4"/><circle cx="16" cy="11" r="1"/><circle cx="18.2" cy="13.5" r="1"/></svg></div>
       <div class="pill-row"><span class="badge">🎮 ゲーム</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 完全新作が登場</span>
       <h2>『リズム天国 ミラクルスターズ』7月2日発売</h2>
@@ -1005,6 +1504,7 @@
 
   <div class="reel bg-game" data-cat="game" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="9" rx="4"/><path d="M8 10.5v4M6 12.5h4"/><circle cx="16" cy="11" r="1"/><circle cx="18.2" cy="13.5" r="1"/></svg></div>
       <div class="pill-row"><span class="badge">🎮 ゲーム</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 懐かしの名作が復活</span>
       <h2>『ゴエモン コレクション』7月2日発売</h2>
@@ -1016,6 +1516,7 @@
 
   <div class="reel bg-game" data-cat="game" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="9" rx="4"/><path d="M8 10.5v4M6 12.5h4"/><circle cx="16" cy="11" r="1"/><circle cx="18.2" cy="13.5" r="1"/></svg></div>
       <div class="pill-row"><span class="badge">🎮 ゲーム</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 人気作の完全新作</span>
       <h2>『ソードアート・オンライン Echoes of Aincrad』7月9日発売</h2>
@@ -1027,6 +1528,7 @@
 
   <div class="reel bg-game" data-cat="game" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="9" rx="4"/><path d="M8 10.5v4M6 12.5h4"/><circle cx="16" cy="11" r="1"/><circle cx="18.2" cy="13.5" r="1"/></svg></div>
       <div class="pill-row"><span class="badge">🎮 ゲーム</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 名作リメイク</span>
       <h2>『アサシン クリード ブラック フラッグ RE:シンクロ』7月9日発売</h2>
@@ -1038,6 +1540,7 @@
 
   <div class="reel bg-game" data-cat="game" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="9" rx="4"/><path d="M8 10.5v4M6 12.5h4"/><circle cx="16" cy="11" r="1"/><circle cx="18.2" cy="13.5" r="1"/></svg></div>
       <div class="pill-row"><span class="badge">🎮 ゲーム</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 不穏なスローライフ</span>
       <h2>『夜廻』スタッフ新作、不穏な雰囲気漂うスローライフが話題</h2>
@@ -1049,6 +1552,7 @@
 
   <div class="reel bg-game" data-cat="game" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="9" rx="4"/><path d="M8 10.5v4M6 12.5h4"/><circle cx="16" cy="11" r="1"/><circle cx="18.2" cy="13.5" r="1"/></svg></div>
       <div class="pill-row"><span class="badge">🎮 ゲーム</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 213本の情報を掲載</span>
       <h2>ファミ通、2026年7月発売ゲームソフト213本をまとめ</h2>
@@ -1060,6 +1564,7 @@
 
   <div class="reel bg-game" data-cat="game" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="9" rx="4"/><path d="M8 10.5v4M6 12.5h4"/><circle cx="16" cy="11" r="1"/><circle cx="18.2" cy="13.5" r="1"/></svg></div>
       <div class="pill-row"><span class="badge">🎮 ゲーム</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 話題作をピックアップ</span>
       <h2>Steam、7月のおすすめゲームまとめが公開</h2>
@@ -1071,6 +1576,7 @@
 
   <div class="reel bg-game" data-cat="game" data-date="2026-07-11">
     <div class="reel-content">
+      <div class="reel-visual"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="9" rx="4"/><path d="M8 10.5v4M6 12.5h4"/><circle cx="16" cy="11" r="1"/><circle cx="18.2" cy="13.5" r="1"/></svg></div>
       <div class="pill-row"><span class="badge">🎮 ゲーム</span><span class="date-tag">7月</span></div>
       <span class="tldr">🧠 読者アンケート結果</span>
       <h2>「7月発売の新作ゲームは何を買う?」読者投票が話題</h2>
