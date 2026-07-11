@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>NOWNOW - 気になるニュースまとめ</title>
+<title>スキマー - 気になるニュースまとめ</title>
 
 <!-- Home-screen / PWA branding — lets iOS/Android treat this like a real
      installed app icon, with its own launch screen color and no Safari
@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="NOWNOW">
+<meta name="apple-mobile-web-app-title" content="スキマー">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a1330">
 
@@ -183,6 +183,7 @@
   .reel.bg-game{background:linear-gradient(165deg,#7b3ff2 0%, #ff5da2 100%);}
   .reel.bg-cover{background:linear-gradient(165deg,#1a1330 0%, #4a2d8c 55%, #8c5cff 100%);}
   .reel.bg-outro{background:linear-gradient(165deg,#241a3a 0%, #ff5da2 130%);}
+  .reel.bg-wrap{background:linear-gradient(165deg,#2f2566 0%, #8c5cff 55%, #ff5da2 100%);}
 
   .reel-content{
     position:relative;
@@ -415,13 +416,106 @@
   }
   .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
   noscript .cat-row{display:none;}
+
+  /* ---------- weekly "wrapped" report card ---------- */
+  .wrap-num{
+    font-size:56px;
+    font-weight:800;
+    line-height:1;
+    margin-top:2px;
+    text-shadow:0 2px 16px rgba(0,0,0,.18);
+  }
+  .wrap-bars{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-top:18px;
+    max-width:56ch;
+  }
+  .wrap-bar-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .wrap-bar-icon svg{
+    width:16px;height:16px;
+    stroke:#fff;
+    fill:none;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    flex:0 0 auto;
+    display:block;
+  }
+  .wrap-bar-label{
+    font-size:12.5px;
+    font-weight:700;
+    width:52px;
+    flex:0 0 auto;
+  }
+  .wrap-bar-track{
+    flex:1;
+    height:7px;
+    border-radius:4px;
+    background:rgba(255,255,255,0.22);
+    overflow:hidden;
+  }
+  .wrap-bar-fill{
+    display:block;
+    height:100%;
+    background:#fff;
+    border-radius:4px;
+  }
+  .wrap-pct{
+    font-family:var(--mono);
+    font-size:11px;
+    width:32px;
+    text-align:right;
+    opacity:.85;
+    flex:0 0 auto;
+  }
+  .wrap-hidden{
+    margin-top:16px;
+    padding:10px 14px;
+    border-radius:12px;
+    background:rgba(255,255,255,0.14);
+    width:fit-content;
+  }
+  .wrap-hidden-label{
+    font-family:var(--mono);
+    font-size:10.5px;
+    opacity:.8;
+  }
+  .wrap-hidden-value{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:14px;
+    font-weight:800;
+    margin-top:4px;
+  }
+  .wrap-hidden-value svg{
+    width:16px;height:16px;
+    stroke:#fff;
+    fill:none;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  .wrap-save-btn{
+    margin-top:20px;
+    border:none;
+    cursor:pointer;
+    font-family:inherit;
+  }
+  .wrap-save-btn:active{transform:scale(.96);}
 </style>
 </head>
 <body>
 
 <div class="topbar">
   <div class="row1">
-    <div class="logo"><span class="dot"></span>NOWNOW</div>
+    <div class="logo"><span class="dot"></span>スキマー</div>
     <div class="sync-pill">SYNC 07:00</div>
   </div>
   <div class="progress-row" id="progressRow"></div>
@@ -466,6 +560,23 @@
       <p class="cover-text">音楽はSUPER EIGHTの新曲配信や乃木坂46のシングル情報でにぎやか。教育は明光ネットの調査で「宿題も生成AI」な実態が判明、AIはOpenAIの新機能「ChatGPT Work」や自民党のAI政策提言で動きが加速中。スポーツはプロ野球の熱戦に加え本田圭佑が日本代表監督に名乗りを上げて話題、ゲームはポケモンGO10周年イベントで盛り上がってるよ。</p>
     </div>
     <div class="swipe-hint">↑ スワイプして次へ</div>
+  </div>
+
+  <!-- Weekly "wrapped" report card — personalized, so it only makes sense
+       once JS has read localStorage. Stays class="hidden" (same mechanism
+       category filtering uses) until renderWrapCard() decides there's
+       enough reading history, so it never shows an embarrassingly empty
+       card to a brand-new visitor. No data-cat on purpose: it should
+       survive every category filter, same as the cover/outro slides. -->
+  <div class="reel bg-wrap hidden" id="wrapSlide">
+    <div class="reel-content">
+      <div class="cover-eyebrow">📊 直近7日間のあなたの傾向</div>
+      <div class="wrap-num" id="wrapNum">0</div>
+      <div class="cover-eyebrow" style="margin-top:-10px;">本のニュースを読んだ</div>
+      <div class="wrap-bars" id="wrapBars"></div>
+      <div class="wrap-hidden" id="wrapHiddenBox"></div>
+      <button class="read-link wrap-save-btn" id="wrapSaveBtn">画像として保存 ⤓</button>
+    </div>
   </div>
 
   <div class="reel bg-music" data-cat="music" data-date="2026-07-11">
@@ -1655,6 +1766,10 @@
 
 <div class="toast" id="toast"></div>
 
+<!-- Only used to rasterize the weekly wrapped card into a shareable PNG.
+     Loaded from the CDN allowlist; the save button below falls back to a
+     text share if this fails to load (offline, blocked network, etc). -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
 // Everything below is progressive ENHANCEMENT only — the feed above already
 // works (readable + swipeable via CSS scroll-snap) with zero JavaScript.
@@ -1723,7 +1838,9 @@
     var slideH = reelsEl.clientHeight || 1;
     var idx = Math.round(reelsEl.scrollTop / slideH);
     idx = Math.max(0, Math.min(idx, visible.length - 1));
-    updateFabForReel(visible[idx]);
+    var reel = visible[idx];
+    updateFabForReel(reel);
+    if(reel) recordRead(reel, allReels.indexOf(reel));
   }
 
   // iOS Safari's address bar / bottom bar show and hide as you scroll,
@@ -1824,7 +1941,7 @@
   var fabShare = document.getElementById('fabShare');
   fabShare.addEventListener('click', function(){
     if(!activeReel) return;
-    var title = (activeReel.querySelector('h2')||{}).textContent || 'NOWNOW';
+    var title = (activeReel.querySelector('h2')||{}).textContent || 'スキマー';
     var linkEl = activeReel.querySelector('.read-link');
     var url = linkEl ? linkEl.href : location.href;
     if(navigator.share){
@@ -1834,6 +1951,135 @@
         showToast('リンクをコピーしました');
       }).catch(function(){});
     }
+  });
+
+  // ---------- weekly "wrapped" report card ----------
+  // Tracks which articles were actually scrolled-to (not just present in
+  // the feed) so we can show the user their own reading pattern over the
+  // last 7 days. Purely client-side / localStorage — no server, no account.
+  var wrapSlide = document.getElementById('wrapSlide');
+  var wrapNum = document.getElementById('wrapNum');
+  var wrapBars = document.getElementById('wrapBars');
+  var wrapHiddenBox = document.getElementById('wrapHiddenBox');
+  var wrapSaveBtn = document.getElementById('wrapSaveBtn');
+  var tagMapAll = {music:'音楽', edu:'教育', ai:'AI', sports:'スポーツ', tech:'テック', ent:'エンタメ', game:'ゲーム'};
+  var iconPaths = {
+    music: '<circle cx="7" cy="18" r="3"/><circle cx="17" cy="16" r="3"/><path d="M10 18V5l10-2v11"/>',
+    edu: '<path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.6 3 3 6 3s6-1.4 6-3v-5"/>',
+    ai: '<path d="M12 2.5l2.1 6.4L21 11l-6.4 2.1L12 20l-2.1-6.9L3 11l6.9-2.1z"/>',
+    sports: '<circle cx="12" cy="12" r="9"/><path d="M12 3c3.2 3.2 3.2 14.8 0 18M3 12c3.2-3.2 14.8-3.2 18 0"/>',
+    tech: '<rect x="6" y="2" width="12" height="20" rx="2.5"/><circle cx="12" cy="18" r="1"/>',
+    ent: '<path d="M12 3l2.4 6.5L21 11l-5 4 1.5 7L12 18.4 6.5 22 8 15l-5-4 6.6-1.5z"/>',
+    game: '<rect x="3" y="8" width="18" height="9" rx="4"/><path d="M8 10.5v4M6 12.5h4"/><circle cx="16" cy="11" r="1"/><circle cx="18.2" cy="13.5" r="1"/>'
+  };
+
+  function getReads(){
+    try{ return JSON.parse(localStorage.getItem('nownow_reads')||'[]'); }catch(e){ return []; }
+  }
+  function setReads(list){
+    try{ localStorage.setItem('nownow_reads', JSON.stringify(list)); }catch(e){}
+  }
+  function todayStr(){
+    var d = new Date();
+    var mm = String(d.getMonth()+1); if(mm.length<2) mm = '0'+mm;
+    var dd = String(d.getDate()); if(dd.length<2) dd = '0'+dd;
+    return d.getFullYear() + '-' + mm + '-' + dd;
+  }
+  // Called whenever the scroll-snap feed settles on a slide. Dedups by
+  // (article id + calendar day) so scrolling back over the same slide
+  // repeatedly doesn't inflate the count — this is a lightweight "did the
+  // user land on this" signal, not a real dwell-time reading detector.
+  function recordRead(reel, idx){
+    var cat = reel.dataset.cat;
+    if(!cat) return;
+    var id = reelId(reel, idx);
+    var day = todayStr();
+    var reads = getReads();
+    for(var i=0;i<reads.length;i++){
+      if(reads[i].day === day && reads[i].id === id) return;
+    }
+    reads.push({id:id, cat:cat, day:day});
+    if(reads.length > 500) reads = reads.slice(reads.length - 500);
+    setReads(reads);
+  }
+  function computeWeeklyStats(){
+    var reads = getReads();
+    var now = new Date();
+    var cutoff = new Date(now.getFullYear(), now.getMonth(), now.getDate()-6);
+    var recent = reads.filter(function(r){
+      var d = new Date(r.day + 'T00:00:00');
+      return d >= cutoff;
+    });
+    var counts = {};
+    recent.forEach(function(r){ counts[r.cat] = (counts[r.cat]||0) + 1; });
+    var total = recent.length;
+    var ranked = Object.keys(counts).map(function(cat){
+      return {cat:cat, count:counts[cat], pct: total ? Math.round(counts[cat]/total*100) : 0};
+    }).sort(function(a,b){ return b.count - a.count; });
+    return {total:total, ranked:ranked};
+  }
+  // Only reveals the card once there's enough history (>=3 distinct reads
+  // this week) so a brand-new visitor never sees an embarrassingly empty
+  // "0 articles" card.
+  function renderWrapCard(){
+    var stats = computeWeeklyStats();
+    if(stats.total < 3) return;
+    wrapNum.textContent = stats.total;
+    wrapBars.innerHTML = '';
+    stats.ranked.slice(0,5).forEach(function(r){
+      var row = document.createElement('div');
+      row.className = 'wrap-bar-row';
+      row.innerHTML =
+        '<span class="wrap-bar-icon"><svg viewBox="0 0 24 24">' + (iconPaths[r.cat]||'') + '</svg></span>' +
+        '<span class="wrap-bar-label">' + (tagMapAll[r.cat]||r.cat) + '</span>' +
+        '<span class="wrap-bar-track"><span class="wrap-bar-fill" style="width:' + r.pct + '%"></span></span>' +
+        '<span class="wrap-pct">' + r.pct + '%</span>';
+      wrapBars.appendChild(row);
+    });
+    if(stats.ranked.length > 1){
+      var hidden = stats.ranked[1];
+      wrapHiddenBox.style.display = '';
+      wrapHiddenBox.innerHTML =
+        '<div class="wrap-hidden-label">隠れ推しジャンル</div>' +
+        '<div class="wrap-hidden-value"><svg viewBox="0 0 24 24">' + (iconPaths[hidden.cat]||'') + '</svg>' + (tagMapAll[hidden.cat]||hidden.cat) + '</div>';
+    } else {
+      wrapHiddenBox.style.display = 'none';
+      wrapHiddenBox.innerHTML = '';
+    }
+    wrapSlide.classList.remove('hidden');
+  }
+  wrapSaveBtn.addEventListener('click', function(){
+    var shareText = '直近7日間で' + wrapNum.textContent + '本のニュースを読んだよ📊 スキマーで自分の傾向もチェックできる。';
+    if(typeof html2canvas === 'undefined'){
+      if(navigator.share){ navigator.share({text:shareText}).catch(function(){}); }
+      else if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(shareText).then(function(){ showToast('コピーしました'); }).catch(function(){});
+      }
+      return;
+    }
+    var card = wrapSlide.querySelector('.reel-content');
+    html2canvas(card, {backgroundColor:null, scale:2}).then(function(canvas){
+      canvas.toBlob(function(blob){
+        if(!blob){ showToast('画像の作成に失敗しました'); return; }
+        var file = null;
+        try{ file = new File([blob], 'sukimer-weekly.png', {type:'image/png'}); }catch(e){}
+        if(file && navigator.canShare && navigator.canShare({files:[file]})){
+          navigator.share({files:[file], title:'スキマー 週間レポート', text:shareText}).catch(function(){});
+          return;
+        }
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'sukimer-weekly.png';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function(){ URL.revokeObjectURL(url); }, 3000);
+        showToast('画像を保存しました');
+      });
+    }).catch(function(){
+      showToast('画像の作成に失敗しました');
+    });
   });
 
   function buildProgress(){
@@ -1887,6 +2133,7 @@
     if(e.key === 'ArrowUp'){ reelsEl.scrollBy({top:-slideH, behavior:'smooth'}); }
   });
 
+  renderWrapCard();
   buildProgress();
   updateProgress();
   updateActiveReel();

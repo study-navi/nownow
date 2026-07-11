@@ -1,6 +1,6 @@
 {
-  "name": "NOWNOW - 気になるニュースまとめ",
-  "short_name": "NOWNOW",
+  "name": "スキマー - 気になるニュースまとめ",
+  "short_name": "スキマー",
   "description": "音楽・教育・AI・スポーツ・テック・エンタメ・ゲームの最新ニュースをスワイプで読めるアプリ",
   "start_url": "news_app.html",
   "scope": "./",
