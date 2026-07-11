@@ -856,12 +856,31 @@
       '## メモ\n\n';
 
     var filePath = OBSIDIAN_FOLDER + '/' + date + '_' + slugify(title);
-    var uri = 'obsidian://new'
-      + '?vault=' + encodeURIComponent(OBSIDIAN_VAULT)
+    var baseParams = '?vault=' + encodeURIComponent(OBSIDIAN_VAULT)
       + '&file=' + encodeURIComponent(filePath)
-      + '&content=' + encodeURIComponent(md)
       + '&overwrite';
-    window.location.href = uri;
+
+    // Encoding the whole article body straight into the URL (via `content=`)
+    // can push the obsidian:// link past what iOS is willing to hand off to
+    // another app in one piece — long Japanese text blows up a lot under
+    // percent-encoding. Copying the note to the clipboard first and using
+    // Obsidian's `clipboard` flag keeps the URL itself short (just the vault
+    // + file name) so it can't get silently truncated; Obsidian then pulls
+    // the actual content from the clipboard on its own, no manual paste.
+    function openObsidian(useClipboard){
+      var uri = 'obsidian://new' + baseParams +
+        (useClipboard ? '&clipboard' : ('&content=' + encodeURIComponent(md)));
+      window.location.href = uri;
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(md).then(function(){
+        openObsidian(true);
+      }).catch(function(){
+        openObsidian(false);
+      });
+    } else {
+      openObsidian(false);
+    }
 
     var saved = getSaved();
     if(saved.indexOf(id) === -1){
