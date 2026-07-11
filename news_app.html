@@ -753,6 +753,13 @@
   var fabLikeLabel = document.getElementById('fabLikeLabel');
   var activeReel = null;
 
+  // ♡ saves land directly in this Obsidian vault via the obsidian:// URI
+  // scheme (no download/move step). The vault must be opened on this device
+  // in the Obsidian app, and lives inside iCloud Drive so a save on iPhone
+  // syncs to the Mac automatically.
+  var OBSIDIAN_VAULT = 'Hiro';
+  var OBSIDIAN_FOLDER = 'NOWNOW';
+
   function getSaved(){
     try{ return JSON.parse(localStorage.getItem('nownow_saved')||'[]'); }catch(e){ return []; }
   }
@@ -848,13 +855,13 @@
       '**元記事**: ' + url + '\n\n' +
       '## メモ\n\n';
 
-    var blob = new Blob([md], {type:'text/markdown;charset=utf-8'});
-    var a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = date + '_' + slugify(title) + '.md';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
+    var filePath = OBSIDIAN_FOLDER + '/' + date + '_' + slugify(title);
+    var uri = 'obsidian://new'
+      + '?vault=' + encodeURIComponent(OBSIDIAN_VAULT)
+      + '&file=' + encodeURIComponent(filePath)
+      + '&content=' + encodeURIComponent(md)
+      + '&overwrite';
+    window.location.href = uri;
 
     var saved = getSaved();
     if(saved.indexOf(id) === -1){
@@ -864,7 +871,7 @@
     btn.classList.add('saved','pop');
     btn.textContent = '❤';
     setTimeout(function(){ btn.classList.remove('pop'); }, 400);
-    showToast('Obsidian用メモを保存しました');
+    showToast('Obsidianに保存しました');
   }
 
   fabLike.addEventListener('click', function(){
