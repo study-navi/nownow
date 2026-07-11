@@ -2642,9 +2642,9 @@
     // own smooth-scroll in the same tick makes the two fight and stutter.
     // Waiting one frame lets that settle first, then behavior:'smooth'
     // (already the default via CSS) glides cleanly to the target.
-    requestAnimationFrame(function(){
+    setTimeout(function(){
       reelsEl.scrollTo({top: top, behavior:'smooth'});
-    });
+    }, 60);
     buildProgress();
     updateProgress();
     updateActiveReel();
