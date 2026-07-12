@@ -106,6 +106,12 @@
     overflow-x:auto;
     margin-top:12px;
     scrollbar-width:none;
+    scroll-behavior:smooth;
+    /* Genre count has grown past what fits on one screen — fade both
+       edges so a partly-cut-off chip reads as "scroll for more" rather
+       than looking clipped/broken. */
+    -webkit-mask-image:linear-gradient(to right, transparent 0, black 18px, black calc(100% - 22px), transparent 100%);
+    mask-image:linear-gradient(to right, transparent 0, black 18px, black calc(100% - 22px), transparent 100%);
   }
   .cat-row::-webkit-scrollbar{display:none;}
   .cat-chip{
@@ -114,12 +120,13 @@
     cursor:pointer;
     font-family:inherit;
     font-weight:700;
-    font-size:12.5px;
-    padding:7px 14px;
+    font-size:12px;
+    padding:6.5px 12.5px;
     border-radius:999px;
     color:#fff;
     background:rgba(255,255,255,0.18);
     transition:transform .15s ease, background .15s ease;
+    white-space:nowrap;
   }
   .cat-chip.active{
     background:#fff;
@@ -181,6 +188,8 @@
   .reel.bg-tech{background:linear-gradient(165deg,#1ac9e6 0%, #3f5eff 100%);}
   .reel.bg-ent{background:linear-gradient(165deg,#ff4fa3 0%, #ffb648 100%);}
   .reel.bg-game{background:linear-gradient(165deg,#7b3ff2 0%, #ff5da2 100%);}
+  .reel.bg-idol{background:linear-gradient(165deg,#ff4fd8 0%, #ffb347 100%);}
+  .reel.bg-geinou{background:linear-gradient(165deg,#ff6b6b 0%, #6b4fff 100%);}
   .reel.bg-cover{background:linear-gradient(165deg,#1a1330 0%, #4a2d8c 55%, #8c5cff 100%);}
   .reel.bg-outro{background:linear-gradient(165deg,#241a3a 0%, #ff5da2 130%);}
   .reel.bg-wrap{background:linear-gradient(165deg,#2f2566 0%, #8c5cff 55%, #ff5da2 100%);}
@@ -527,6 +536,8 @@
     <button class="cat-chip" data-cat="sports">⚽ スポーツ</button>
     <button class="cat-chip" data-cat="tech">📱 テック</button>
     <button class="cat-chip" data-cat="ent">🎬 エンタメ</button>
+    <button class="cat-chip" data-cat="idol">🎤 アイドル</button>
+    <button class="cat-chip" data-cat="geinou">📸 芸能</button>
     <button class="cat-chip" data-cat="game">🎮 ゲーム</button>
   </div>
 </div>
@@ -553,11 +564,102 @@
 
 <div class="reels" id="reels">
 
-  <div class="reel bg-cover" id="coverSlide">
+  <!-- "今日のポイント" digest — one variant per genre, plus one for "すべて".
+       These use data-cover-cat (NOT data-cat) so they're filtered by a
+       dedicated exact-match rule in applyCategory(): only the variant
+       matching the current chip is ever visible, so switching genres
+       always shows a relevant digest instead of the same general one.
+       Tapping a chip still resets scroll to top (landing on that genre's
+       own digest); swiping/arrow-keys deliberately skip past all of
+       these straight to the first article, so the swipe never feels
+       like "jumping back to the top". Update ALL of these every run —
+       each with its own 2-3 sentence digest for that genre only. -->
+  <div class="reel bg-cover" data-cover-cat="all" id="coverSlideAll">
     <div class="reel-content">
       <div class="cover-eyebrow">🧠 AI DIGEST · 2026-07-12</div>
       <div class="cover-title">今日のポイント</div>
       <p class="cover-text">大相撲・名古屋場所が本日開幕、横綱大の里の初日相撲に注目だよ。AI業界は富士通がラピダスに1.4ナノ半導体の製造委託を検討中で、ソフトバンク・NEC・ホンダ・ソニーの新会社設立など国産AI開発も加速中。エンタメはSixTONES祭りで、新ドラマ『告白』スタート＆冠番組も放送。ゲームは新作RPG「Echoes of Aincrad」やPS5のディスク生産終了方針など動きが盛りだくさんだよ。</p>
+    </div>
+    <div class="swipe-hint">↑ スワイプして次へ</div>
+  </div>
+
+  <div class="reel bg-cover" data-cover-cat="music" id="coverSlideMusic">
+    <div class="reel-content">
+      <div class="cover-eyebrow">🎵 音楽 DIGEST · 2026-07-12</div>
+      <div class="cover-title">今日の音楽ポイント</div>
+      <p class="cover-text">SixTONESが新曲「Dance Forever / マイオンリー」を9月9日リリース決定、冠バラエティ「Golden SixTONES」も本日放送でお祭り状態。NCT WISHも日本語新曲「YO-I-DON!」でカムバックしたよ。</p>
+    </div>
+    <div class="swipe-hint">↑ スワイプして次へ</div>
+  </div>
+
+  <div class="reel bg-cover" data-cover-cat="edu" id="coverSlideEdu">
+    <div class="reel-content">
+      <div class="cover-eyebrow">📚 教育 DIGEST · 2026-07-12</div>
+      <div class="cover-title">今日の教育ポイント</div>
+      <p class="cover-text">GIGA端末は定着したものの、学校での生成AI活用はまだ「限定的」という調査結果が話題に。一方「生成AIパイロット校」は478校・149自治体まで拡大してるよ。</p>
+    </div>
+    <div class="swipe-hint">↑ スワイプして次へ</div>
+  </div>
+
+  <div class="reel bg-cover" data-cover-cat="ai" id="coverSlideAi">
+    <div class="reel-content">
+      <div class="cover-eyebrow">🤖 AI DIGEST · 2026-07-12</div>
+      <div class="cover-title">今日のAIポイント</div>
+      <p class="cover-text">富士通が次世代1.4ナノAI半導体の製造をラピダスに委託検討、ソフトバンク・NEC・ホンダ・ソニーは国産AI基盤モデル開発で連合を組む動きも。AnthropicのClaude CoworkもWeb・モバイル展開を拡大中だよ。</p>
+    </div>
+    <div class="swipe-hint">↑ スワイプして次へ</div>
+  </div>
+
+  <div class="reel bg-cover" data-cover-cat="sports" id="coverSlideSports">
+    <div class="reel-content">
+      <div class="cover-eyebrow">⚽ スポーツ DIGEST · 2026-07-12</div>
+      <div class="cover-title">今日のスポーツポイント</div>
+      <p class="cover-text">大相撲・名古屋場所が本日初日、横綱・大の里の一番に注目。プロ野球も阪神・工藤が日本人最速タイの163キロをマークするなど熱戦続きだよ。</p>
+    </div>
+    <div class="swipe-hint">↑ スワイプして次へ</div>
+  </div>
+
+  <div class="reel bg-cover" data-cover-cat="tech" id="coverSlideTech">
+    <div class="reel-content">
+      <div class="cover-eyebrow">📱 テック DIGEST · 2026-07-12</div>
+      <div class="cover-title">今日のテックポイント</div>
+      <p class="cover-text">ドローン規制を強化する改正法が7月14日に施行へ。シャープが初のスマートリング＆スマートウォッチを発売するなど、ウェアラブル界隈も動いてるよ。</p>
+    </div>
+    <div class="swipe-hint">↑ スワイプして次へ</div>
+  </div>
+
+  <div class="reel bg-cover" data-cover-cat="ent" id="coverSlideEnt">
+    <div class="reel-content">
+      <div class="cover-eyebrow">🎬 エンタメ DIGEST · 2026-07-12</div>
+      <div class="cover-title">今日のエンタメポイント</div>
+      <p class="cover-text">SixTONES松村北斗主演の新土曜ドラマ「告白−25年目の秘密−」がスタート。金メダリストの入江聖奈＆登坂絵莉が「ザ！鉄腕！DASH!!」に初出演するなど、映画・ドラマまわりが盛り上がってるよ。</p>
+    </div>
+    <div class="swipe-hint">↑ スワイプして次へ</div>
+  </div>
+
+  <div class="reel bg-cover" data-cover-cat="idol" id="coverSlideIdol">
+    <div class="reel-content">
+      <div class="cover-eyebrow">🎤 アイドル DIGEST · 2026-07-12</div>
+      <div class="cover-title">今日のアイドルポイント</div>
+      <p class="cover-text">アイドルジャンル、始めたばかり。次の自動更新から各グループの最新情報をどんどん追加していくよ。</p>
+    </div>
+    <div class="swipe-hint">↑ スワイプして次へ</div>
+  </div>
+
+  <div class="reel bg-cover" data-cover-cat="geinou" id="coverSlideGeinou">
+    <div class="reel-content">
+      <div class="cover-eyebrow">📸 芸能 DIGEST · 2026-07-12</div>
+      <div class="cover-title">今日の芸能ポイント</div>
+      <p class="cover-text">芸能ジャンルも今日スタート。芸能人の話題やトーク番組情報などを次回の更新から充実させていくね。</p>
+    </div>
+    <div class="swipe-hint">↑ スワイプして次へ</div>
+  </div>
+
+  <div class="reel bg-cover" data-cover-cat="game" id="coverSlideGame">
+    <div class="reel-content">
+      <div class="cover-eyebrow">🎮 ゲーム DIGEST · 2026-07-12</div>
+      <div class="cover-title">今日のゲームポイント</div>
+      <p class="cover-text">バンダイナムコの新作アクションRPG「Echoes of Aincrad」がPS5向けに発売中。PS5は2028年1月以降、パッケージ版ソフトの生産を終了する方針も発表されたよ。</p>
     </div>
     <div class="swipe-hint">↑ スワイプして次へ</div>
   </div>
@@ -2880,7 +2982,7 @@
     var lang = langEl ? langEl.textContent : '';
     var cat = reel.dataset.cat || '';
     var date = reel.dataset.date || '';
-    var tagMap = {music:'音楽', edu:'教育', ai:'AI', sports:'スポーツ', tech:'テック', ent:'エンタメ', game:'ゲーム'};
+    var tagMap = {music:'音楽', edu:'教育', ai:'AI', sports:'スポーツ', tech:'テック', ent:'エンタメ', idol:'アイドル', geinou:'芸能', game:'ゲーム'};
 
     var md = '---\n' +
       'title: "' + title.replace(/"/g,'\\"') + '"\n' +
@@ -2970,7 +3072,7 @@
   var wrapBars = document.getElementById('wrapBars');
   var wrapHiddenBox = document.getElementById('wrapHiddenBox');
   var wrapSaveBtn = document.getElementById('wrapSaveBtn');
-  var tagMapAll = {music:'音楽', edu:'教育', ai:'AI', sports:'スポーツ', tech:'テック', ent:'エンタメ', game:'ゲーム'};
+  var tagMapAll = {music:'音楽', edu:'教育', ai:'AI', sports:'スポーツ', tech:'テック', ent:'エンタメ', idol:'アイドル', geinou:'芸能', game:'ゲーム'};
   var iconPaths = {
     music: '<circle cx="7" cy="18" r="3"/><circle cx="17" cy="16" r="3"/><path d="M10 18V5l10-2v11"/>',
     edu: '<path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.6 3 3 6 3s6-1.4 6-3v-5"/>',
@@ -2978,6 +3080,8 @@
     sports: '<circle cx="12" cy="12" r="9"/><path d="M12 3c3.2 3.2 3.2 14.8 0 18M3 12c3.2-3.2 14.8-3.2 18 0"/>',
     tech: '<rect x="6" y="2" width="12" height="20" rx="2.5"/><circle cx="12" cy="18" r="1"/>',
     ent: '<path d="M12 3l2.4 6.5L21 11l-5 4 1.5 7L12 18.4 6.5 22 8 15l-5-4 6.6-1.5z"/>',
+    idol: '<path d="M12 3a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z"/><path d="M7 11a5 5 0 0 0 10 0"/><path d="M12 16v4M9 21h6"/>',
+    geinou: '<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/>',
     game: '<rect x="3" y="8" width="18" height="9" rx="4"/><path d="M8 10.5v4M6 12.5h4"/><circle cx="16" cy="11" r="1"/><circle cx="18.2" cy="13.5" r="1"/>'
   };
 
@@ -3131,9 +3235,20 @@
     chip.classList.add('active');
     var cat = chip.dataset.cat;
     allReels.forEach(function(reel){
-      if(!reel.dataset.cat) return; // cover / outro / wrapSlide always visible
+      if(reel.dataset.coverCat){
+        // Digest slides use their own attribute (not data-cat) precisely so
+        // they DON'T follow the "cat==='all' shows everything" rule below —
+        // only the one digest matching the current genre should ever show.
+        reel.classList.toggle('hidden', reel.dataset.coverCat !== cat);
+        return;
+      }
+      if(!reel.dataset.cat) return; // outro / wrapSlide always visible
       reel.classList.toggle('hidden', cat !== 'all' && reel.dataset.cat !== cat);
     });
+    // Keep the active chip visible in the scrollable genre row as the
+    // list grows past what fits on one screen — swiping/tapping through
+    // genres shouldn't require also manually scrolling the chip row.
+    chip.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
     var target = null;
     if(opts.jumpToContent && cat !== 'all'){
       for(var i=0;i<allReels.length;i++){
